@@ -24,7 +24,7 @@ checkUsername = () => {
 
     return $.ajax({
         type: 'GET',
-        url: 'registrationValidation/checkUsername/' + username,
+        url: 'registration/checkUsername/' + username,
         success: (msg) => {
             if (msg == 'Istnieje już taki użytkownik w bazie') {
                 submit.prop('disabled', true);
@@ -43,8 +43,7 @@ checkEmail = () => {
 
     return $.ajax({
         type: 'GET',
-        url: 'registrationValidation/checkEmail/' + email,
-        async: false,
+        url: 'registration/checkEmail/' + email,
         success: (msg) => {
             if (msg == 'Istnieje już użytkownik o takim adresie e-mail') {
                 submit.prop('disabled', true);
@@ -55,16 +54,59 @@ checkEmail = () => {
     });
 }
 
+// Check if password is strong
+passwordStrength = () => {
+    let password = $('#password1').val();
+    let submit = $('#register-submit');
+    let response = $('#passwordStrengthResponse');
+    let strength = 0;
+    if (password.length < 8) {
+        response.css('color', '#CE1A06');
+        response.html('Za krótkie hasło');
+        submit.prop('disable', true);
+        return false;
+    } else {
+        strength++;
+        // Upper and lowercase letters
+        if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+            strength++;
+        }
+        // Letter and number
+        if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) {
+            strength++;
+        }
+        // Special character
+        if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+            strength++;
+        }
+
+        if (strength <= 2) {
+            response.css('color', '#CE1A06');
+            response.html('Słabe hasło');
+            submit.prop('disable', true);
+            return false;
+        } else if (strength == 3) {
+            response.css('color', '#1CB94E');
+            response.html('Ok hasło');
+        } else {
+            response.css('color', '#1CB94E');
+            response.html('Silne hasło');
+        }
+        return true;
+    }
+}
+
 // Check everything and let register
 check = () => {
     let submit = $('#register-submit');
-    if (passwordMatch() && checkUsername() && checkEmail()) {
+    if (passwordMatch() && checkUsername() && checkEmail() && passwordStrength()) {
         submit.prop('disabled', false);
     }
 }
 
 // Forms
 $(() => {
+    // visible login form
     $('#login-form-link').click((e) => {
         $('#usernameResponse').hide();
         $('#emailResponse').hide();
@@ -75,6 +117,7 @@ $(() => {
         $('#login-form-link').addClass('active');
         e.preventDefault();
     });
+    // visible registration form
     $('#register-form-link').click((e) => {
         $('#usernameResponse').show();
         $('#emailResponse').show();
@@ -84,5 +127,25 @@ $(() => {
         $('#login-form-link').removeClass('active');
         $('#register-form-link').addClass('active');
         e.preventDefault();
+    });
+    // submit registration form
+    $('#register-form').submit((e) => {
+        e.preventDefault();
+        $.ajax({
+            data: $('#register-form').serialize(),
+            type: 'POST',
+            url: $('#register-form').attr('action'),
+            success: (msg) => {
+                if (msg == 'Zarejestrowałeś/aś się') {
+                    swal(msg, 'Możesz się teraz zalogować', 'success');
+                } else {
+                    swal(msg, 'Spróbuj ponownie', 'error');
+                }
+            },
+            error: () => {
+                swal('Wystąpił błąd', 'Spróbuj ponownie', 'error');
+            }
+        });
+        $('#register-form')[0].reset();
     });
 });

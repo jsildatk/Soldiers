@@ -90,7 +90,7 @@ body {
     background-color: #1CA347;
     border-color: #1CA347;
 }
-#usernameResponse, #emailResponse, #passwordResponse, #flashRegister, #flashLogin, #flashRecoveryFail, #flashRecoverySuccess, #flashRecovery {
+#usernameResponse, #emailResponse, #passwordResponse, #passwordStrengthResponse {
     font-family: Didot, serif;
     font-size: 120%;
 }

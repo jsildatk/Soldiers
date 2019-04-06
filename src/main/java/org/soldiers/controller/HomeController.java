@@ -1,6 +1,7 @@
 package org.soldiers.controller;
 
 import org.soldiers.model.Soldier;
+import org.soldiers.model.User;
 import org.soldiers.repository.SoldierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ public class HomeController {
     public String homePage(Model model) {
         List<Soldier> soldiers = soldierRepository.findByUserNull();
         model.addAttribute("soldiers", soldiers);
-        return "home";
+        model.addAttribute("user", new User());
+        return "index";
     }
 }

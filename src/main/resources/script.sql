@@ -55,7 +55,7 @@ CREATE TABLE user (
 
 CREATE TABLE soldier (
 	soldier_id INT AUTO_INCREMENT,
-    user_id INT DEFAULT NULL,
+    user_id INT DEFAULT NULL UNIQUE,
     rank_id INT NOT NULL,
     address_id INT NOT NULL,
     team_id INT NOT NULL,
@@ -108,6 +108,6 @@ INSERT INTO address (street, city, postal_code) VALUES ('Wesoła 5', 'Sierakowic
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340'),
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340');
 INSERT INTO team (team) VALUES ('Gromowładni'), ('Gniewni'), ('Bezlitośni');
-INSERT INTO user (user_role_id, username, password, email) VALUES (1, 'xd', '$2y$12$rVVYr568tCuhrE.6qJ4hBuAIcgVHMG8Ev/vB0BpR6uUYTwTty/Xq.', 'xd@wp.pl');
+INSERT INTO user (user_role_id, username, password, email) VALUES (1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl');
 INSERT INTO soldier (user_id, rank_id, address_id, team_id, first_name, last_name, personal_evidence_number, birth_date) VALUES 
 (1, 1, 1, 1, 'Roman', 'Mekdżejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25');
