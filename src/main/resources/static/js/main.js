@@ -106,7 +106,7 @@ check = () => {
 
 // Forms
 $(() => {
-    // visible login form
+    // show login form
     $('#login-form-link').click((e) => {
         $('#usernameResponse').hide();
         $('#emailResponse').hide();
@@ -117,7 +117,7 @@ $(() => {
         $('#login-form-link').addClass('active');
         e.preventDefault();
     });
-    // visible registration form
+    // show registration form
     $('#register-form-link').click((e) => {
         $('#usernameResponse').show();
         $('#emailResponse').show();
@@ -130,10 +130,9 @@ $(() => {
     });
     // submit registration form
     $('#register-form').submit((e) => {
-        e.preventDefault();
         $.ajax({
             data: $('#register-form').serialize(),
-            type: 'POST',
+            type: $('#register-form').attr('method'),
             url: $('#register-form').attr('action'),
             success: (msg) => {
                 if (msg == 'Zarejestrowałeś/aś się') {
@@ -147,5 +146,7 @@ $(() => {
             }
         });
         $('#register-form')[0].reset();
+        $('#passwordStrengthResponse').html('');
+        e.preventDefault();
     });
 });

@@ -9,7 +9,10 @@ import org.soldiers.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -46,7 +49,10 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String register(User user) {
+    public String register(@Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "Coś poszło nie tak";
+        }
         try {
             UserRole userRole = userRoleRepository.findByRole("SOLDIER");
             Soldier soldier = soldierRepository.findById(user.getUserId()).get();

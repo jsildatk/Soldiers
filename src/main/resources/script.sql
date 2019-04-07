@@ -1,5 +1,7 @@
 use soldiers;
 
+SET sql_mode='NO_AUTO_VALUE_ON_ZERO';
+
 DROP TABLE IF EXISTS item_soldier;
 DROP TABLE IF EXISTS mission_team;
 DROP TABLE IF EXISTS mission;
@@ -108,6 +110,6 @@ INSERT INTO address (street, city, postal_code) VALUES ('Wesoła 5', 'Sierakowic
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340'),
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340');
 INSERT INTO team (team) VALUES ('Gromowładni'), ('Gniewni'), ('Bezlitośni');
-INSERT INTO user (user_role_id, username, password, email) VALUES (1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl');
+INSERT INTO user (user_id, user_role_id, username, password, email) VALUES (0, 1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl');
 INSERT INTO soldier (user_id, rank_id, address_id, team_id, first_name, last_name, personal_evidence_number, birth_date) VALUES 
-(1, 1, 1, 1, 'Roman', 'Mekdżejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25');
+(null, 1, 1, 1, 'Roman', 'Mekdżejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25');

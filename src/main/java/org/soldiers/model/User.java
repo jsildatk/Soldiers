@@ -1,6 +1,9 @@
 package org.soldiers.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -15,12 +18,16 @@ public class User {
     private UserRole userRoleId;
 
     @Column(name = "username", nullable = false)
+    @NotNull
     private String username;
 
     @Column(name = "password", nullable = false, length = 60)
+    @NotNull
+    @Size(min = 8)
     private String password;
 
     @Column(name = "email", nullable = false, unique = true)
+    @Email
     private String email;
 
     public User(UserRole userRoleId, String username, String password, String email) {
