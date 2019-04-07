@@ -3,28 +3,28 @@ package org.soldiers.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_role")
-public class UserRole {
+@Table(name = "role")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_role_id")
-    private Long userRoleId;
+    @Column(name = "role_id")
+    private Long id;
 
     @Column(nullable = false, name = "role")
     private String role;
 
-    public UserRole(String role) {
+    public Role(String role) {
         this.role = role;
     }
 
-    public UserRole() {}
+    public Role() {}
 
     public Long getId() {
-        return userRoleId;
+        return id;
     }
 
-    public void setId(Long userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getRole() {
@@ -37,6 +37,6 @@ public class UserRole {
 
     @Override
     public String toString() {
-        return this.userRoleId + " " + this.role;
+        return "Role(" + this.id + " " + this.role + ")";
     }
 }

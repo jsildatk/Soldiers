@@ -9,7 +9,7 @@ public class Soldier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "soldier_id")
-    private Long soldierId;
+    private Long id;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
@@ -52,12 +52,12 @@ public class Soldier {
 
     public Soldier() {}
 
-    public Long getSoldierId() {
-        return soldierId;
+    public Long getId() {
+        return id;
     }
 
-    public void setSoldierId(Long soldierId) {
-        this.soldierId = soldierId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -126,8 +126,8 @@ public class Soldier {
 
     @Override
     public String toString() {
-        return "UserId: " + this.user.getUserRoleId() + "\nAddress: " + this.address.getStreet() + " " + this.address.getCity() + " " + this.address.getPostalCode() + "\n" +
-                "Rank: " + this.rank.getRank() + "\nTeam: " + this.team.getTeam() + "\nSoldier: " + this.firstName + " " + this.lastName + " " + this.personalEvidenceNumber +
-                " " + this.birthDate;
+        return "Soldier(" + this.user + "\nAddress: " + this.address.getStreet() + " " + this.address.getCity() + " " + this.address.getPostalCode() + "\n" +
+                "Rank: " + this.rank.getRank() + "\nTeam: " + this.team.getTeam() + "\nData: " + this.firstName + " " + this.lastName + " " + this.personalEvidenceNumber +
+                " " + this.birthDate + ")";
     }
 }

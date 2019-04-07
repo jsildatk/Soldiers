@@ -11,11 +11,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "user_role_id")
-    private UserRole userRoleId;
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @Column(name = "username", nullable = false)
     @NotNull
@@ -30,8 +30,8 @@ public class User {
     @Email
     private String email;
 
-    public User(UserRole userRoleId, String username, String password, String email) {
-        this.userRoleId = userRoleId;
+    public User(Role role, @NotNull String username, @NotNull @Size(min = 8) String password, @Email String email) {
+        this.role = role;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -39,20 +39,20 @@ public class User {
 
     public User() {}
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public UserRole getUserRoleId() {
-        return userRoleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserRoleId(UserRole userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getUsername() {
@@ -81,6 +81,7 @@ public class User {
 
     @Override
     public String toString() {
-        return this.userId + " " + this.username + " " + this.password + " " + this.email + " " + this.getUserRoleId().getRole();
+        return "User(" + this.id + " " + this.username + " " + this.password + " " + this.email
+                + " " + this.role + ")";
     }
 }

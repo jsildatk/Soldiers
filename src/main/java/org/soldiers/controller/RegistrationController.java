@@ -2,10 +2,10 @@ package org.soldiers.controller;
 
 import org.soldiers.model.Soldier;
 import org.soldiers.model.User;
-import org.soldiers.model.UserRole;
+import org.soldiers.model.Role;
 import org.soldiers.repository.SoldierRepository;
 import org.soldiers.repository.UserRepository;
-import org.soldiers.repository.UserRoleRepository;
+import org.soldiers.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +22,7 @@ public class RegistrationController {
     private UserRepository userRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private SoldierRepository soldierRepository;
@@ -54,11 +54,14 @@ public class RegistrationController {
             return "Coś poszło nie tak";
         }
         try {
-            UserRole userRole = userRoleRepository.findByRole("SOLDIER");
-            Soldier soldier = soldierRepository.findById(user.getUserId()).get();
+            Role role = roleRepository.findByRole("SOLDIER");
+            Soldier soldier = soldierRepository.findById(user.getId()).get();
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setUserRoleId(userRole);
+            user.setRole(role);
             soldier.setUser(user);
+            System.out.println(role);
+            System.out.println(user);
+            System.out.println(soldier);
             userRepository.save(user);
             soldierRepository.save(soldier);
             return "Zarejestrowałeś/aś się";

@@ -8,7 +8,7 @@ public class Rank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rank_id")
-    private Long rankId;
+    private Long id;
 
     @Column(name = "rank", nullable = false)
     private String rank;
@@ -19,12 +19,12 @@ public class Rank {
 
     public Rank() {}
 
-    public Long getRankId() {
-        return rankId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRankId(Long rankId) {
-        this.rankId = rankId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getRank() {
@@ -37,6 +37,6 @@ public class Rank {
 
     @Override
     public String toString() {
-        return this.rankId + " " + this.rank;
+        return "Rank(" + this.id + " " + this.rank + ")";
     }
 }
