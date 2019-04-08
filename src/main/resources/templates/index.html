@@ -29,7 +29,7 @@
                     <div class = "row">
                         <div class = "col-lg-12">
                             <div id = "login">
-                                <form id = "login-form" action = "/login" method = "POST" role = "form" style = "display: block;">
+                                <form id = "login-form" th:action = "@{/login}" method = "post" role = "form" style = "display: block;">
                                     <div class = "form-group">
                                         <div class = "input-group">
                                             <span class = "input-group-addon"> <i class = "glyphicon glyphicon-user"> </i> </span>
@@ -48,13 +48,16 @@
                                                 <input type = "submit" value = "Zaloguj" name = "login-submit" id = "login-submit" tabindex = "4" class = "form-control btn btn-login">
                                             </div>
                                         </div>
+                                        <div class = "col-md-10 col-md-offset-1 text-center">
+                                            <p th:if="${loginError}" class = "error"> Nieprawidłowe dane logowania </p>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
                             <div id = "register">
-                                <form th:action = "@{registration/register}" th:method = "post" th:object = "${user}" id = "register-form" role = "form" style = "display: none;">
+                                <form th:action = "@{registration/register}" method = "post" th:object = "${user}" id = "register-form" role = "form" style = "display: none;">
                                     <div class = "form-group">
-                                        <select th:field = "*{id}" class = "form-control" id = "select">
+                                        <select th:field = "*{id}" class = "form-control" id = "select" required>
                                             <option value = "" hidden selected = "selected"> Znajdź swoje imię i nazwisko </option>
                                             <option th:each = "s : ${soldiers}" th:value = "${s.id}" th:text = "${s.firstName + ' ' + s.lastName}" />
                                         </select>

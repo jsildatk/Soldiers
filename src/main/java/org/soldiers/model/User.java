@@ -30,11 +30,15 @@ public class User {
     @Email
     private String email;
 
-    public User(Role role, @NotNull String username, @NotNull @Size(min = 8) String password, @Email String email) {
+    @Column(name = "enabled", columnDefinition = "boolean default true", nullable = false, length = 1)
+    private Boolean enabled = true;
+
+    public User(Role role, @NotNull String username, @NotNull @Size(min = 8) String password, @Email String email, boolean enabled) {
         this.role = role;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.enabled = enabled;
     }
 
     public User() {}
@@ -79,9 +83,17 @@ public class User {
         this.email = email;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "User(" + this.id + " " + this.username + " " + this.password + " " + this.email
-                + " " + this.role + ")";
+                + " " + this.enabled + " " + this.role + ")";
     }
 }

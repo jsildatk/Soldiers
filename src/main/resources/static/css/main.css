@@ -101,3 +101,8 @@ body {
 #login-submit:hover, #register-submit:hover {
     font-weight: bold;
 }
+.error {
+    color: #CE1A06;
+    font-family: Didot, serif;
+    font-size: 120%;
+}

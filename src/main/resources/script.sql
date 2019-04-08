@@ -51,6 +51,7 @@ CREATE TABLE user (
     username VARCHAR(30) UNIQUE NOT NULL,
     password BINARY(60) NOT NULL,
 	email VARCHAR(30) UNIQUE NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
     PRIMARY KEY (user_id),
     FOREIGN KEY (role_id) REFERENCES role (role_id)
 ) DEFAULT CHARSET=UTF8;

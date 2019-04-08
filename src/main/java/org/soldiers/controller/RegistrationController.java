@@ -59,10 +59,6 @@ public class RegistrationController {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole(role);
             soldier.setUser(user);
-            System.out.println(role);
-            System.out.println(user);
-            System.out.println(soldier);
-            userRepository.save(user);
             soldierRepository.save(soldier);
             return "Zarejestrowałeś/aś się";
         } catch (DataIntegrityViolationException e) {
