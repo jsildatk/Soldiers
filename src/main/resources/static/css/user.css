@@ -1,0 +1,11 @@
+footer {
+    background: #4285F4;
+    font-family: "Noto Sans CJK SC Thin";
+}
+.table th {
+    font-family: "Fira Code Medium"
+}
+.table td {
+    font-family: "DejaVu Sans Mono";
+    font-size: 120%;
+}

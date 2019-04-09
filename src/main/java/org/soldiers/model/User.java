@@ -1,21 +1,27 @@
 package org.soldiers.model;
 
+import net.bytebuddy.build.ToStringPlugin;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Set<News> news;
 
     @Column(name = "username", nullable = false)
     @NotNull
@@ -33,8 +39,9 @@ public class User {
     @Column(name = "enabled", columnDefinition = "boolean default true", nullable = false, length = 1)
     private Boolean enabled = true;
 
-    public User(Role role, @NotNull String username, @NotNull @Size(min = 8) String password, @Email String email, boolean enabled) {
+    public User(Role role, Set<News> news, @NotNull String username, @NotNull @Size(min = 8) String password, @Email String email, Boolean enabled) {
         this.role = role;
+        this.news = news;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -57,6 +64,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<News> getNews() {
+        return news;
+    }
+
+    public void setNews(Set<News> news) {
+        this.news = news;
     }
 
     public String getUsername() {
@@ -83,11 +98,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
