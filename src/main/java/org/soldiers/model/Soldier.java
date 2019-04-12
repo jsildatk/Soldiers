@@ -1,6 +1,9 @@
 package org.soldiers.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.sql.Date;
 
 @Entity
@@ -28,15 +31,20 @@ public class Soldier {
     private Team team;
 
     @Column(name = "first_name", nullable = false)
+    @NotBlank(message = "Pole nie może być puste")
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
+    @NotBlank(message = "Pole nie może być puste")
     private String lastName;
 
     @Column(name = "personal_evidence_number", nullable = false, unique = true, length = 11)
+    @NotBlank(message = "Pole nie może być puste")
+    @Size(min = 11, max = 11, message = "Pesel musi się składać z 11 cyfr")
     private String personalEvidenceNumber;
 
     @Column(name = "birth_date", nullable = false)
+    @NotNull(message = "Pole nie może być puste")
     private Date birthDate;
 
     public Soldier(User user, Rank rank, Address address, Team team, String firstName, String lastName, String personalEvidenceNumber, Date birthDate) {

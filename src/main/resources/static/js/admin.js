@@ -41,3 +41,36 @@ deleteSoldier = (e, soldierId) => {
     });
     e.preventDefault();
 }
+
+$(() => {
+    $("#addSoldierForm").submit((e) => {
+        e.preventDefault();
+        $.ajax({
+            data: $('#addSoldierForm').serialize(),
+            type: $('#addSoldierForm').attr('method'),
+            url: $('#addSoldierForm').attr('action'),
+            success: (data) => {
+                console.log(data);
+                if (data != "") {
+                    $("#soldiersTable").append('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.firstName + ' ' + data.lastName + '</td><td>' + data.rank.rank + '</td>' +
+                        '<td>' + data.personalEvidenceNumber + '</td><td>' + data.birthDate + '</td><td>' + data.address.street + ' ' + data.address.city + ' ' +
+                        data.address.postalCode + '</td><td>' + data.team.team);
+                    if (data.user != null) {
+                        $("#soldiersTable tr:last").append('<td>' + data.user.username + '</td><td>' + data.user.role.role + '</td>');
+                    } else {
+                        $("#soldiersTable tr:last").append('<td> </td><td> </td>');
+                    }
+                    $("#soldiersTable tr:last").append('<td><button type="button" class="btn btn-warning update" onclick="updateSoldier(event,' + data.id + ')">Edytuj</button></td>');
+                    $("#soldiersTable tr:last").append('<td><button type="button" class="btn btn-danger update" onclick="deleteSoldier(event, ' + data.id + ')">Usuń</button></td>');
+                    $("#soldiersTable").append("</tr>");
+                    swal("Wszytko przebiegło pomyślnie", "Dodano żołnierza", "success");
+                } else {
+                    swal("Coś poszło nie tak", "Wystąpił błąd z walidacją", "info");
+                }
+            },
+            error: () => {
+                swal("Coś poszło nie tak", "error");;
+            }
+        });
+    });
+});

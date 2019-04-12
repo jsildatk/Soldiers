@@ -1,16 +1,14 @@
 package org.soldiers.controller;
 
-import org.soldiers.model.News;
-import org.soldiers.model.Soldier;
-import org.soldiers.model.User;
-import org.soldiers.repository.NewsRepository;
-import org.soldiers.repository.SoldierRepository;
-import org.soldiers.repository.UserRepository;
+import org.soldiers.model.*;
+import org.soldiers.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -26,6 +24,15 @@ public class AdminController {
     @Autowired
     private SoldierRepository soldierRepository;
 
+    @Autowired
+    private RankRepository rankRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
+
     @GetMapping("")
     public String adminHomePage(Principal principal, Model model) {
         User user = userRepository.findByUsername(principal.getName());
@@ -39,8 +46,14 @@ public class AdminController {
     public String adminSoldiersPage(Principal principal, Model model) {
         User user = userRepository.findByUsername(principal.getName());
         List<Soldier> soldiers = soldierRepository.findAll();
+        List<Rank> ranks = rankRepository.findAll();
+        List<Address> addresses = addressRepository.findAll();
+        List<Team> teams = teamRepository.findAll();
         model.addAttribute("user", user);
         model.addAttribute("soldiers", soldiers);
+        model.addAttribute("ranks", ranks);
+        model.addAttribute("addresses", addresses);
+        model.addAttribute("teams", teams);
         model.addAttribute("soldier", new Soldier());
         return "admin/soldiers";
     }
@@ -61,5 +74,26 @@ public class AdminController {
             e.printStackTrace();
         }
         return "Coś poszło nie tak";
+    }
+
+    @PostMapping("/soldiers")
+    @ResponseBody
+    public Soldier addSoldier(@Valid Soldier soldier, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return null;
+        }
+        try {
+            Rank rank = rankRepository.findById(soldier.getRank().getId()).get();
+            Address address = addressRepository.findById(soldier.getAddress().getId()).get();
+            Team team = teamRepository.findById(soldier.getTeam().getId()).get();
+            soldier.setRank(rank);
+            soldier.setAddress(address);
+            soldier.setTeam(team);
+            soldierRepository.save(soldier);
+            return soldier;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
