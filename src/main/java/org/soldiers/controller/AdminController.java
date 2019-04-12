@@ -33,6 +33,9 @@ public class AdminController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @GetMapping("")
     public String adminHomePage(Principal principal, Model model) {
         User user = userRepository.findByUsername(principal.getName());
@@ -49,11 +52,13 @@ public class AdminController {
         List<Rank> ranks = rankRepository.findAll();
         List<Address> addresses = addressRepository.findAll();
         List<Team> teams = teamRepository.findAll();
+        List<Role> roles = roleRepository.findAll();
         model.addAttribute("user", user);
         model.addAttribute("soldiers", soldiers);
         model.addAttribute("ranks", ranks);
         model.addAttribute("addresses", addresses);
         model.addAttribute("teams", teams);
+        model.addAttribute("roles", roles);
         model.addAttribute("soldier", new Soldier());
         return "admin/soldiers";
     }
@@ -78,7 +83,34 @@ public class AdminController {
 
     @PostMapping("/soldiers")
     @ResponseBody
-    public Soldier addSoldier(@Valid Soldier soldier, BindingResult bindingResult, Model model) {
+    public Soldier addSoldier(@Valid Soldier soldier, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return null;
+        }
+        try {
+            Rank rank = rankRepository.findById(soldier.getRank().getId()).get();
+            Address address = addressRepository.findById(soldier.getAddress().getId()).get();
+            Team team = teamRepository.findById(soldier.getTeam().getId()).get();
+            soldier.setRank(rank);
+            soldier.setAddress(address);
+            soldier.setTeam(team);
+            soldierRepository.save(soldier);
+            return soldier;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/soldiers/{id}")
+    @ResponseBody
+    public Soldier getSoldier(@PathVariable Long id) {
+        return soldierRepository.findById(id).get();
+    }
+
+    @PutMapping("/soldiers")
+    @ResponseBody
+    public Soldier updateSoldier(@Valid Soldier soldier, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return null;
         }

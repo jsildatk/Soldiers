@@ -70,8 +70,6 @@
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Data urodzenia'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Adres'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Grupa'"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'Użytkownik'"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'Rola'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                     </tr>
@@ -86,9 +84,7 @@
                                 <td th:text="${s.birthDate}"></td>
                                 <td th:text="${s.address.street + ' ' + s.address.city + ' ' + s.address.postalCode}"></td>
                                 <td th:text="${s.team.team}"></td>
-                                <td th:text="${s?.user?.username}"></td>
-                                <td th:text="${s?.user?.role?.role}"></td>
-                                <td><button type="button" class="btn btn-warning update" th:onclick="'updateSoldier(event,'+${s.id}+')'">Edytuj</button></td>
+                                <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateSoldier(event,'+${s.id}+')'">Edytuj</button></td>
                                 <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteSoldier(event,'+${s.id}+')'">Usuń</button></td>
                             </tr>
                         </th:block>
@@ -102,7 +98,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalTitle">Formularz</h5>
+                    <h5 class="modal-title" id="addModalTitle">Dodawanie</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -126,6 +122,40 @@
                             <option th:each = "t : ${teams}" th:value = "${t.id}" th:text = "${t.team}" />
                         </select>
                         <input type="submit" class="btn btn-primary" value="Dodaj" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalTitle">Edycja</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${soldier}" id="updateSoldierForm">
+                        <input type="text" th:field="*{firstName}" th:placeholder="'Imię'" id="firstName" />
+                        <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" id="lastName"/>
+                        <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" id="personalEvidenceNumber"/>
+                        <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" id="birthDate" />
+                        <select th:field = "*{rank.id}" class = "form-control" id="rank" required>
+                            <option th:each = "r : ${ranks}" th:value = "${r.id}" th:text = "${r.rank}" />
+                        </select>
+                        <select th:field = "*{address.id}" class = "form-control" id="address" required>
+                            <option th:each = "a : ${addresses}" th:value = "${a.id}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
+                        </select>
+                        <select th:field = "*{team.id}" class = "form-control" id="team" required>
+                            <option th:each = "t : ${teams}" th:value = "${t.id}" th:text = "${t.team}" />
+                        </select>
+                        <input type="hidden" th:field="*{id}" />
+                        <input type="submit" class="btn btn-primary" value="Edytuj" />
                     </form>
                 </div>
                 <div class="modal-footer">
