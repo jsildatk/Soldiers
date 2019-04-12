@@ -8,7 +8,7 @@ searchSoldier = () => {
             if (data.length != 0) {
                 $("#soldiersTable tbody tr").remove();
                 for (let i = 0; i < data.length; i++) {
-                    $("#soldiersTable").append('<tr><td>'+ data[i].id +'</td><td>' + data[i].firstName + ' ' + data[i].lastName + '</td><td>' + data[i].rank.rank + '</td>' +
+                    $("#soldiersTable").append('<tr id="' + data[i].id + '"><td>'+ data[i].id +'</td><td>' + data[i].firstName + ' ' + data[i].lastName + '</td><td>' + data[i].rank.rank + '</td>' +
                         '<td>' + data[i].personalEvidenceNumber + '</td><td>' + data[i].birthDate + '</td><td>' + data[i].address.street + ' ' + data[i].address.city + ' ' +
                         data[i].address.postalCode + '</td><td>' + data[i].team.team);
                     if (data[i].user != null) {
@@ -16,8 +16,8 @@ searchSoldier = () => {
                     } else {
                         $("#soldiersTable tr:last").append('<td> </td><td> </td>');
                     }
-                    $("#soldiersTable tr:last").append('<td><a href="/admin/soldiers/' + data[i].id + '"><button type="button" id="updateSoldierButton" class="btn btn-warning update">Edytuj</button></a></td>');
-                    $("#soldiersTable tr:last").append('<td><a href="/admin/soldiers/' + data[i].id + '"><button type="button" id="deleteSoldierButton" class="btn btn-danger update">Usuń</button></a></td>');
+                    $("#soldiersTable tr:last").append('<td><button type="button" class="btn btn-warning update" onclick="updateSoldier(event,' + data[i].id + ')">Edytuj</button></td>');
+                    $("#soldiersTable tr:last").append('<td><button type="button" class="btn btn-danger update" onclick="deleteSoldier(event, ' + data[i].id + ')">Usuń</button></td>');
                 }
                 $("#soldiersTable").append("</tr>");
             } else {
@@ -25,4 +25,19 @@ searchSoldier = () => {
             }
         }
     });
+}
+
+deleteSoldier = (e, soldierId) => {
+    $.ajax({
+        type: "DELETE",
+        url: "/admin/soldiers/" + soldierId,
+        success: (msg) => {
+            swal("Usunięto", msg, "success");
+            $("tr[id="+soldierId+"]").remove();
+        },
+        error: (msg) => {
+            swal("Wystąpił błąd", msg, "error");
+        }
+    });
+    e.preventDefault();
 }

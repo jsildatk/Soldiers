@@ -77,7 +77,7 @@
                     </thead>
                     <tbody>
                         <th:block th:each="s : ${soldiers}">
-                            <tr>
+                            <tr th:id="${s.id}">
                                 <td th:text="${s.id}"></td>
                                 <td th:text="${s.firstName + ' ' + s.lastName}"></td>
                                 <td th:text="${s.rank.rank}"></td>
@@ -87,8 +87,8 @@
                                 <td th:text="${s.team.team}"></td>
                                 <td th:text="${s?.user?.username}"></td>
                                 <td th:text="${s?.user?.role?.role}"></td>
-                                <td><a th:href="@{'/admin/soldiers/' + ${s.id}}"><button type="button" id="updateSoldierButton" class="btn btn-warning update">Edytuj</button></a></td>
-                                <td><a th:href="@{'/admin/soldiers/' + ${s.id}}"><button type="button" id="deleteSoldierButton" class="btn btn-danger delete">Usuń</button></a></td>
+                                <td><button type="button" class="btn btn-warning update" th:onclick="'updateSoldier(event,'+${s.id}+')'">Edytuj</button></td>
+                                <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteSoldier(event,'+${s.id}+')'">Usuń</button></td>
                             </tr>
                         </th:block>
                     </tbody>
