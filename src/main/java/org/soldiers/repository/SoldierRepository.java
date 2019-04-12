@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SoldierRepository extends CrudRepository<Soldier, Long> {
     List<Soldier> findByUserNull();
+    List<Soldier> findAll();
+    List<Soldier> findByLastName(String lastName);
 }
