@@ -6,18 +6,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/user.css" />
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/js/admin.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li>
                 <a class="nav-link" th:href="@{/admin}"> Strona główna </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/soldiers}"> Żołnierze </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-item active">
                 <a class="nav-link" th:href="@{/admin/users}"> Użytkownicy </a>
             </li>
             <li class="nav-item">
@@ -54,28 +57,40 @@
 <div class="container-fluid">
     <div class="row">
         <div class = "col-12 p-0">
-            <div class = "jumbotron min-vh-100 text-center d-flex flex-column justify-content-center">
-                <table class="table table-hover">
-                    <thead>
+            <div class = "jumbotron min-vh-100 text-center d-flex flex-column">
+                <div class = "row">
+                    <div class="col-12 p-0">
+                        <input type="text" placeholder="Szukaj po nazwie" id="searchUser"> <button type="button" class="btn btn-primary" onclick="searchUser()"> Szukaj </button>
+                    </div>
+                </div>
+                <table class="table table-hover table-striped" id="usersTable">
+                    <thead class="thead-dark">
                     <tr>
-                        <th class="text-info font-italic font-weight-bold h1" th:text="${news.title}"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'#'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Nazwa'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'E-mail'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Rola'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Aktywny'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td th:text="${news.content}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="'Dodał: ' + ${news.user.getUsername()}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="'Data dodania: ' + ${news.addDate}"></td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-success h4" th:href="@{/news}" th:text="'Wszystkie aktualności'"></a></td>
-                    </tr>
+                    <th:block th:each="u : ${users}">
+                        <tr th:id="${u.id}">
+                            <td th:text="${u.id}"></td>
+                            <td th:text="${u.username}"></td>
+                            <td th:text="${u.email}"></td>
+                            <td th:text="${u.role.role}"></td>
+                            <td th:if="${u.enabled}" th:text="TAK"></td>
+                            <td th:if="${!u.enabled}" th:text="NIE"></td>
+                            <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateUser(event,'+${u.id}+')'">Edytuj</button></td>
+                            <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteUser(event,'+${u.id}+')'">Usuń</button></td>
+                        </tr>
+                    </th:block>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"> Dodaj </button>
             </div>
         </div>
     </div>

@@ -63,6 +63,21 @@ public class AdminController {
         return "admin/soldiers";
     }
 
+    @GetMapping("/users")
+    public String adminUsersPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<User> users = userRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("users", users);
+        return "admin/users";
+    }
+
+    @GetMapping("/users/searchByUsername/{username}")
+    @ResponseBody
+    public User getUserByUsername(@PathVariable String username) {
+        return userRepository.findByUsername(username);
+    }
+
     @GetMapping("/searchByLastName/{lastName}")
     @ResponseBody
     public List<Soldier> getSoldierByLastName(@PathVariable String lastName) {
