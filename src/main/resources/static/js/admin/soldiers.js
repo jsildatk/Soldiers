@@ -61,9 +61,17 @@ $(() => {
     $("#updateSoldierForm").submit((e) => {
         e.preventDefault();
         $.ajax({
-            data: $("#updateSoldierForm").serialize(),
+            data: {
+                firstName: $("#updateSoldierForm #firstName").val(),
+                lastName: $("#updateSoldierForm #lastName").val(),
+                personalEvidenceNumber: $("#updateSoldierForm #personalEvidenceNumber").val(),
+                birthDate: $("#updateSoldierForm #birthDate").val(),
+                rank: $("#updateSoldierForm #rank").val(),
+                address: $("#updateSoldierForm #address").val(),
+                team: $("#updateSoldierForm #team").val()
+            },
             type: "PUT",
-            url: "/admin/soldiers",
+            url: "/admin/soldiers/" + $("#updateSoldierForm #id").val(),
             success: (data) => {
                 if (data != "") {
                     $("#soldiersTable #" + data.id).replaceWith('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.firstName + ' ' + data.lastName + '</td><td>' + data.rank.rank + '</td>' +
