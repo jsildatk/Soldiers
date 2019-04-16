@@ -33,6 +33,9 @@ public class AdminController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @GetMapping("")
     public String adminHomePage(Principal principal, Model model) {
         User user = userRepository.findByUsername(principal.getName());
@@ -62,8 +65,11 @@ public class AdminController {
     public String adminUsersPage(Principal principal, Model model) {
         User user = userRepository.findByUsername(principal.getName());
         List<User> users = userRepository.findAll();
+        List<Role> roles = roleRepository.findAll();
         model.addAttribute("user", user);
         model.addAttribute("users", users);
+        model.addAttribute("roles", roles);
+        model.addAttribute("userForm", new User());
         return "admin/users";
     }
 }

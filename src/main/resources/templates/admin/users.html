@@ -72,7 +72,6 @@
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Rola'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Aktywny'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,12 +84,38 @@
                             <td th:if="${u.enabled}" th:text="TAK"></td>
                             <td th:if="${!u.enabled}" th:text="NIE"></td>
                             <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateUser(event,'+${u.id}+')'">Edytuj</button></td>
-                            <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteUser(event,'+${u.id}+')'">Usuń</button></td>
                         </tr>
                     </th:block>
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"> Dodaj </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalTitle">Edycja</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${userForm}" id="updateUserForm">
+                        <select th:field = "*{role.id}" class = "form-control" id="role" required>
+                            <option th:each = "r : ${roles}" th:value = "${r.id}" th:text = "${r.role}" />
+                        </select>
+                        <select th:field = "*{enabled}" class = "form-control" id="enabled" required>
+                            <option value="true" th:text="TAK" />
+                            <option value="false" th:text="NIE" />
+                        </select>
+                        <input type="hidden" th:field="*{id}" />
+                        <input type="submit" class="btn btn-primary" value="Edytuj" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
             </div>
         </div>
     </div>

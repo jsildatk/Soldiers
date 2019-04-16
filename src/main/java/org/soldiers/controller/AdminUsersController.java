@@ -15,4 +15,17 @@ public class AdminUsersController {
     public User getUserByUsername(@PathVariable String username) {
         return userRepository.findByUsername(username);
     }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id,  User user) {
+        User u1 = userRepository.findById(id).get();
+        u1.setRole(user.getRole());
+        u1.setEnabled(user.getEnabled());
+        return userRepository.save(u1);
+    }
 }
