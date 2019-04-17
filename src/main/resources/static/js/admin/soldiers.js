@@ -42,14 +42,18 @@ $(() => {
             type: $('#addSoldierForm').attr('method'),
             url: $('#addSoldierForm').attr('action'),
             success: (data) => {
-                if (data != "") {
+                if (data.firstName != null) {
                     $("#soldiersTable").append('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.firstName + ' ' + data.lastName + '</td><td>' + data.rank.rank + '</td>' +
                         '<td>' + data.personalEvidenceNumber + '</td><td>' + data.birthDate + '</td><td>' + data.address.street + ' ' + data.address.city + ' ' +
                         data.address.postalCode + '</td><td>' + data.team.team + '</td><td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" onclick="updateSoldier(event, ' + data.id + ')">Edytuj</button></td>' +
                         '<td><button type="button" class="btn btn-danger update" onclick="deleteSoldier(event, ' + data.id + ')">Usuń</button></td></tr>');
                     swal("Wszytko przebiegło pomyślnie", "Dodano żołnierza", "success");
                 } else {
-                    swal("Coś poszło nie tak", "Wystąpił błąd z walidacją", "info");
+                    let validation = "";
+                    for (let i = 0; i < data.length; i++) {
+                        validation += "* " + data[i].defaultMessage + "\n";
+                    }
+                    swal("Wystąpił problem z walidacją", validation , "info");
                 }
             },
             error: () => {
@@ -73,14 +77,18 @@ $(() => {
             type: "PUT",
             url: "/admin/soldiers/" + $("#updateSoldierForm #id").val(),
             success: (data) => {
-                if (data != "") {
+                if (data.firstName != null) {
                     $("#soldiersTable #" + data.id).replaceWith('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.firstName + ' ' + data.lastName + '</td><td>' + data.rank.rank + '</td>' +
                         '<td>' + data.personalEvidenceNumber + '</td><td>' + data.birthDate + '</td><td>' + data.address.street + ' ' + data.address.city + ' ' +
                         data.address.postalCode + '</td><td>' + data.team.team + '</td><td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" onclick="updateSoldier(event,' + data.id + ')">Edytuj</button></td>' +
                         '<td><button type="button" class="btn btn-danger update" onclick="deleteSoldier(event, ' + data.id + ')">Usuń</button></td></tr>');
                     swal("Wszytko przebiegło pomyślnie", "Zedytowano żołnierza", "success");
                 } else {
-                    swal("Coś poszło nie tak", "Wystąpił błąd z walidacją", "info");
+                    let validation = "";
+                    for (let i = 0; i < data.length; i++) {
+                        validation += "* " + data[i].defaultMessage + "\n";
+                    }
+                    swal("Wystąpił problem z walidacją", validation , "info");
                 }
             },
             error: () => {

@@ -38,9 +38,9 @@ public class AdminSoldiersController {
     }
 
     @PostMapping("")
-    public Soldier addSoldier(@Valid Soldier soldier, BindingResult bindingResult) {
+    public Object addSoldier(@Valid Soldier soldier, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return null;
+            return bindingResult.getAllErrors();
         }
         try {
             Rank rank = rankRepository.findById(soldier.getRank().getId()).get();
@@ -58,9 +58,9 @@ public class AdminSoldiersController {
     }
 
     @PutMapping("/{id}")
-    public Soldier updateSoldier(@PathVariable Long id, @Valid Soldier soldier, BindingResult bindingResult) {
+    public Object updateSoldier(@PathVariable Long id, @Valid Soldier soldier, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return null;
+            return bindingResult.getAllErrors();
         }
         try {
             Soldier s1 = soldierRepository.findById(id).get();

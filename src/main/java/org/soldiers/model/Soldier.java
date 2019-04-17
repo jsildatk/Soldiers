@@ -31,16 +31,15 @@ public class Soldier {
     private Team team;
 
     @Column(name = "first_name", nullable = false)
-    @NotBlank(message = "Pole nie może być puste")
+    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'imię' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
-    @NotBlank(message = "Pole nie może być puste")
+    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'nazwisko' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
     private String lastName;
 
     @Column(name = "personal_evidence_number", nullable = false, unique = true, length = 11)
-    @NotBlank(message = "Pole nie może być puste")
-    @Size(min = 11, max = 11, message = "Pesel musi się składać z 11 cyfr")
+    @Pattern(regexp = "[0-9]{11}", message = "Pole 'pesel' musi zawierać dokładnie 11 cyfr")
     private String personalEvidenceNumber;
 
     @Column(name = "birth_date", nullable = false)

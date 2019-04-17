@@ -108,10 +108,10 @@
                 </div>
                 <div class="modal-body">
                     <form th:action="@{/admin/soldiers}" method="post" th:object="${soldier}" id="addSoldierForm">
-                        <input type="text" th:field="*{firstName}" th:placeholder="'Imię'" />
-                        <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" />
-                        <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" />
-                        <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" />
+                        <input type="text" th:field="*{firstName}" th:placeholder="'Imię'" required />
+                        <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" required />
+                        <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" required />
+                        <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" required />
                         <select th:field = "*{rank.id}" class = "form-control" required>
                             <option value = "" hidden selected = "selected"> Ranga </option>
                             <option th:each = "r : ${ranks}" th:value = "${r.id}" th:text = "${r.rank}" />
@@ -144,10 +144,10 @@
                 </div>
                 <div class="modal-body">
                     <form th:object="${soldier}" id="updateSoldierForm">
-                        <input type="text" th:field="*{firstName}" th:placeholder="'Imię'" id="firstName" />
-                        <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" id="lastName"/>
-                        <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" id="personalEvidenceNumber"/>
-                        <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" id="birthDate" />
+                        <input type="text" th:field="*{firstName}" th:placeholder="'Imię'" id="firstName" required />
+                        <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" id="lastName" required />
+                        <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" id="personalEvidenceNumber" required />
+                        <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" id="birthDate" required />
                         <select th:field = "*{rank.id}" class = "form-control" id="rank" required>
                             <option th:each = "r : ${ranks}" th:value = "${r.id}" th:text = "${r.rank}" />
                         </select>
