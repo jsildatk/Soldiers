@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AddressRepository extends CrudRepository<Address, Long> {
     List<Address> findAll();
+    List<Address> findByCity(String city);
 }

@@ -1,6 +1,7 @@
 package org.soldiers.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "address")
@@ -11,12 +12,15 @@ public class Address {
     private Long id;
 
     @Column(name = "street", nullable = false)
+    @Pattern(regexp = "[A-Z][a-z]*\\s[0-9/]*", message = "Pole 'ulica' musi zaczynać się z dużej litery oraz mieć format ulica_numer lokalu")
     private String street;
 
     @Column(name = "city", nullable = false)
+    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'miasto' musi zaczynać się z dużej litery oraz może zawierać tylko litery")
     private String city;
 
     @Column(name = "postal_code", nullable = false)
+    @Pattern(regexp = "[0-9]{2}-[0-9]{3}", message = "Pole 'kod pocztowy' musi mieć format xx-xxx oraz może zawierać tylko cyfry")
     private String postalCode;
 
     public Address(String street, String city, String postalCode) {

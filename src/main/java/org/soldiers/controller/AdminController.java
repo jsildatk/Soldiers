@@ -72,4 +72,14 @@ public class AdminController {
         model.addAttribute("userForm", new User());
         return "admin/users";
     }
+
+    @GetMapping("/addresses")
+    public String adminAddressesPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Address> addresses = addressRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("addresses", addresses);
+        model.addAttribute("address", new Address());
+        return "admin/addresses";
+    }
 }
