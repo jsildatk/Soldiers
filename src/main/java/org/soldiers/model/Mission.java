@@ -26,7 +26,7 @@ public class Mission {
     )
     private Set<Team> teams = new HashSet<>();
 
-    @OneToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "commander_id", nullable = false)
     private Soldier commander;
 

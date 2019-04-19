@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS news;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
+DROP TRIGGER IF EXISTS delete_user;
 
 CREATE TABLE address (
 	address_id INT AUTO_INCREMENT,
@@ -80,8 +81,8 @@ CREATE TABLE item_soldier (
     item_id INT NOT NULL,
     soldier_id INT NOT NULL,
     PRIMARY KEY (item_id, soldier_id),
-    FOREIGN KEY (item_id) REFERENCES item (item_id),
-    FOREIGN KEY (soldier_id) REFERENCES soldier (soldier_id)
+    FOREIGN KEY (item_id) REFERENCES item (item_id) ON DELETE CASCADE,
+    FOREIGN KEY (soldier_id) REFERENCES soldier (soldier_id) ON DELETE CASCADE
 ) DEFAULT CHARSET=UTF8;
 
 CREATE TABLE mission (
@@ -91,14 +92,14 @@ CREATE TABLE mission (
     start_date DATE NOT NULL,
     end_date DATE DEFAULT NULL,
     PRIMARY KEY (mission_id),
-    FOREIGN KEY (commander_id) REFERENCES soldier (soldier_id)
+    FOREIGN KEY (commander_id) REFERENCES soldier (soldier_id) ON DELETE CASCADE
 ) DEFAULT CHARSET=UTF8;
 
 CREATE TABLE mission_team (
     mission_id INT NOT NULL,
     team_id INT NOT NULL,
     PRIMARY KEY (mission_id, team_id),
-    FOREIGN KEY (mission_id) REFERENCES mission (mission_id),
+    FOREIGN KEY (mission_id) REFERENCES mission (mission_id) ON DELETE CASCADE,
     FOREIGN KEY (team_id) REFERENCES team (team_id)
 ) DEFAULT CHARSET=UTF8;
 
@@ -109,8 +110,16 @@ CREATE TABLE news (
     content TEXT NOT NULL,
     add_date TIMESTAMP,
     PRIMARY KEY (news_id),
-    FOREIGN KEY (user_id) REFERENCES user (user_id)
+    FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE
 ) DEFAULT CHARSET=UTF8;
+
+DELIMITER //
+CREATE TRIGGER delete_user 
+AFTER DELETE ON soldier FOR EACH ROW 
+BEGIN
+	DELETE FROM user WHERE user.user_id = old.soldier_id;
+END //
+DELIMITER ;
 
 INSERT INTO role (role) VALUES ('ADMIN'), ('COMMANDER'), ('SOLDIER');
 INSERT INTO rank (rank) VALUES ('Szeregowy'), ('Kapral'), ('Sierżant'), ('Chorąży'), ('Podporucznik'), ('Porucznik'), ('Kapitan'), ('Major'),
@@ -122,7 +131,8 @@ INSERT INTO address (street, city, postal_code) VALUES ('Wesoła 5', 'Sierakowic
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340'),
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340');
 INSERT INTO team (team) VALUES ('Gromowładni'), ('Gniewni'), ('Bezlitośni');
-INSERT INTO user (user_id, role_id, username, password, email) VALUES (0, 1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl');
+INSERT INTO user (user_id, role_id, username, password, email) VALUES (0, 1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl'), 
+	(1, 2, 'romek', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'romek@wojsko.pl');
 INSERT INTO soldier (user_id, rank_id, address_id, team_id, first_name, last_name, personal_evidence_number, birth_date) VALUES 
 (null, 1, 1, 1, 'Roman', 'Mekdzejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25'), (null, 3, 3,3 , 'Dariusz', 'Ruszka', '77292555233', '1977-09-25');
 INSERT INTO news (user_id, title, content, add_date) VALUES (0, 'Przerwa techniczna', 'Dnia 25.05.2019 od godziny 11:00 
