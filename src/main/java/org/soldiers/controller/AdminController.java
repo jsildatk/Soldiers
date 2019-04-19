@@ -36,6 +36,9 @@ public class AdminController {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private MissionRepository missionRepository;
+
     @GetMapping("")
     public String adminHomePage(Principal principal, Model model) {
         User user = userRepository.findByUsername(principal.getName());
@@ -81,5 +84,19 @@ public class AdminController {
         model.addAttribute("addresses", addresses);
         model.addAttribute("address", new Address());
         return "admin/addresses";
+    }
+
+    @GetMapping("/missions")
+    public String adminMissionsPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Mission> missions = missionRepository.findAll();
+        List<Soldier> soldiers = soldierRepository.findAll();
+        List<Team> teams = teamRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("missions", missions);
+        model.addAttribute("soldiers", soldiers);
+        model.addAttribute("teams", teams);
+        model.addAttribute("missionForm", new Mission());
+        return "admin/missions";
     }
 }
