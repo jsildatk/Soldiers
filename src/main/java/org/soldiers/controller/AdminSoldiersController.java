@@ -44,14 +44,7 @@ public class AdminSoldiersController {
             return bindingResult.getAllErrors();
         }
         try {
-            Rank rank = rankRepository.findById(soldier.getRank().getId()).get();
-            Address address = addressRepository.findById(soldier.getAddress().getId()).get();
-            Team team = teamRepository.findById(soldier.getTeam().getId()).get();
-            soldier.setRank(rank);
-            soldier.setAddress(address);
-            soldier.setTeam(team);
-            soldierRepository.save(soldier);
-            return soldier;
+            return soldierRepository.save(soldier);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -65,18 +58,14 @@ public class AdminSoldiersController {
         }
         try {
             Soldier s1 = soldierRepository.findById(id).get();
-            Rank rank = rankRepository.findById(soldier.getRank().getId()).get();
-            Address address = addressRepository.findById(soldier.getAddress().getId()).get();
-            Team team = teamRepository.findById(soldier.getTeam().getId()).get();
             s1.setFirstName(soldier.getFirstName());
             s1.setLastName(soldier.getLastName());
             s1.setPersonalEvidenceNumber(soldier.getPersonalEvidenceNumber());
             s1.setBirthDate(soldier.getBirthDate());
-            s1.setRank(rank);
-            s1.setAddress(address);
-            s1.setTeam(team);
-            soldierRepository.save(s1);
-            return s1;
+            s1.setRank(soldier.getRank());
+            s1.setAddress(soldier.getAddress());
+            s1.setTeam(soldier.getTeam());
+            return soldierRepository.save(s1);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

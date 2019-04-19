@@ -35,12 +35,11 @@ public class AdminAddressesController {
             return bindingResult.getAllErrors();
         }
         try {
-            addressRepository.save(address);
-            return address;
+            return addressRepository.save(address);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @PutMapping("/{id}")
@@ -53,12 +52,11 @@ public class AdminAddressesController {
             a1.setStreet(address.getStreet());
             a1.setCity(address.getCity());
             a1.setPostalCode(address.getPostalCode());
-            addressRepository.save(a1);
-            return a1;
+            return addressRepository.save(a1);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @DeleteMapping("/{id}")
@@ -68,7 +66,7 @@ public class AdminAddressesController {
             return "Usunięto adres o id: " + id;
         } catch (Exception e) {
             e.printStackTrace();
+            return "Coś poszło nie tak";
         }
-        return "Coś poszło nie tak";
     }
 }

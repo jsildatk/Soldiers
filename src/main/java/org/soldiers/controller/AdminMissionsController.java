@@ -65,7 +65,7 @@ public class AdminMissionsController {
             return "Usunięto misję o id: " + id;
         } catch (Exception e) {
             e.printStackTrace();
+            return "Coś poszło nie tak";
         }
-        return "Coś poszło nie tak";
     }
 }

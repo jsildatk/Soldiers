@@ -102,7 +102,7 @@
                 </div>
                 <div class="modal-body">
                     <form th:object="${userForm}" id="updateUserForm">
-                        <select th:field = "*{role.id}" class = "form-control" id="role" required>
+                        <select th:field = "*{role}" class = "form-control" id="role" required>
                             <option th:each = "r : ${roles}" th:value = "${r.id}" th:text = "${r.role}" />
                         </select>
                         <select th:field = "*{enabled}" class = "form-control" id="enabled" required>

@@ -112,17 +112,17 @@
                         <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" required />
                         <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" required />
                         <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" required />
-                        <select th:field = "*{rank.id}" class = "form-control" required>
+                        <select th:field = "*{rank}" class = "form-control" required>
                             <option value = "" hidden selected = "selected"> Ranga </option>
                             <option th:each = "r : ${ranks}" th:value = "${r.id}" th:text = "${r.rank}" />
                         </select>
-                        <select th:field = "*{address.id}" class = "form-control" required>
+                        <select th:field = "*{address}" class = "form-control" required>
                             <option value = "" hidden selected = "selected"> Adres </option>
-                            <option th:each = "a : ${addresses}" th:value = "${a.id}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
+                            <option th:each = "a : ${addresses}" th:value = "${{a}}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
                         </select>
-                        <select th:field = "*{team.id}" class = "form-control" required>
+                        <select th:field = "*{team}" class = "form-control" required>
                             <option value = "" hidden selected = "selected"> Grupa </option>
-                            <option th:each = "t : ${teams}" th:value = "${t.id}" th:text = "${t.team}" />
+                            <option th:each = "t : ${teams}" th:value = "${{t}}" th:text = "${t.team}" />
                         </select>
                         <input type="submit" class="btn btn-primary" value="Dodaj" />
                     </form>
@@ -148,14 +148,14 @@
                         <input type="text" th:field="*{lastName}" th:placeholder="'Nazwisko'" id="lastName" required />
                         <input type="text" th:field="*{personalEvidenceNumber}" th:placeholder="'Pesel'" id="personalEvidenceNumber" required />
                         <input type="text" th:field="*{birthDate}" th:placeholder="'Data urodzenia'" onfocus="(this.type='date')" id="birthDate" required />
-                        <select th:field = "*{rank.id}" class = "form-control" id="rank" required>
+                        <select th:field = "*{rank}" class = "form-control" id="rank" required>
                             <option th:each = "r : ${ranks}" th:value = "${r.id}" th:text = "${r.rank}" />
                         </select>
-                        <select th:field = "*{address.id}" class = "form-control" id="address" required>
-                            <option th:each = "a : ${addresses}" th:value = "${a.id}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
+                        <select th:field = "*{address}" class = "form-control" id="address" required>
+                            <option th:each = "a : ${addresses}" th:value = "${{a}}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
                         </select>
-                        <select th:field = "*{team.id}" class = "form-control" id="team" required>
-                            <option th:each = "t : ${teams}" th:value = "${t.id}" th:text = "${t.team}" />
+                        <select th:field = "*{team}" class = "form-control" id="team" required>
+                            <option th:each = "t : ${teams}" th:value = "${{t}}" th:text = "${t.team}" />
                         </select>
                         <input type="hidden" th:field="*{id}" />
                         <input type="submit" class="btn btn-primary" value="Edytuj" />
