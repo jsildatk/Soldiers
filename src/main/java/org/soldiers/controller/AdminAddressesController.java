@@ -19,13 +19,13 @@ public class AdminAddressesController {
         this.addressRepository = addressRepository;
     }
 
-    @GetMapping("/searchByCity/{city}")
-    public List<Address> getByCity(@PathVariable String city) {
+    @GetMapping("/city/{city}")
+    public List<Address> getAddressByCity(@PathVariable String city) {
         return addressRepository.findByCity(city);
     }
 
     @GetMapping("/{id}")
-    public Address getById(@PathVariable Long id) {
+    public Address getAddressById(@PathVariable Long id) {
         return addressRepository.findById(id).get();
     }
 

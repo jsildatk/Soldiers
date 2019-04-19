@@ -2,7 +2,7 @@ searchAddress = () => {
     let city = $("#searchAddress").val();
     $.ajax({
         type: "GET",
-        url: "/admin/addresses/searchByCity/" + city,
+        url: "/admin/addresses/city/" + city,
         success: (data) => {
             if (data.length != 0) {
                 $("#addressesTable tbody tr").remove();

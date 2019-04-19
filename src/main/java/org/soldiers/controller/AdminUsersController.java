@@ -15,7 +15,7 @@ public class AdminUsersController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/searchByUsername/{username}")
+    @GetMapping("/username/{username}")
     public User getUserByUsername(@PathVariable String username) {
         return userRepository.findByUsername(username);
     }

@@ -2,7 +2,7 @@ searchSoldier = () => {
     let lastName = $("#searchSoldier").val();
     $.ajax({
         type: "GET",
-        url: "/admin/soldiers/searchByLastName/" + lastName,
+        url: "/admin/soldiers/lastName/" + lastName,
         success: (data) => {
             if (data.length != 0) {
                 $("#soldiersTable tbody tr").remove();

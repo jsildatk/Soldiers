@@ -2,7 +2,7 @@ searchUser = () => {
     let username = $("#searchUser").val();
     $.ajax({
         type: "GET",
-        url: "/admin/users/searchByUsername/" + username,
+        url: "/admin/users/username/" + username,
         success: (data) => {
             if (data.length != 0) {
                 $("#usersTable tbody tr").remove();

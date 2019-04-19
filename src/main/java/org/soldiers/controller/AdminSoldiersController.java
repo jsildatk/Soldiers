@@ -28,8 +28,8 @@ public class AdminSoldiersController {
         this.teamRepository = teamRepository;
     }
 
-    @GetMapping("/searchByLastName/{lastName}")
-    public List<Soldier> getSoldierByLastName(@PathVariable String lastName) {
+    @GetMapping("/lastName/{lastName}")
+    public List<Soldier> getSoldiersByLastName(@PathVariable String lastName) {
         return soldierRepository.findByLastName(lastName);
     }
 
