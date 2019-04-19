@@ -1,1 +1,2 @@
 src/main/resources/templates/* linguist-vendored
+src/main/resources/static/js/sortable.js linguist-vendored
