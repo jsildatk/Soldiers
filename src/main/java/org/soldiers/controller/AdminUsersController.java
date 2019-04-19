@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin/users")
 public class AdminUsersController {
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public AdminUsersController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/searchByUsername/{username}")
     public User getUserByUsername(@PathVariable String username) {

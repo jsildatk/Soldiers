@@ -18,17 +18,18 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/registration")
 public class RegistrationController {
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private RoleRepository roleRepository;
-
-    @Autowired
     private SoldierRepository soldierRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public RegistrationController(UserRepository userRepository, RoleRepository roleRepository, SoldierRepository soldierRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.soldierRepository = soldierRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/checkUsername/{username}")
     public String checkUsername(@PathVariable String username) {

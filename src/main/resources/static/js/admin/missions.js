@@ -69,19 +69,23 @@ endMission = (e, missionId) => {
         url: "/admin/missions/" + missionId,
         type: "PUT",
         success: (data) => {
-            let teams = "[";
-            for (let i = 0; i < data.teams.length; i++) {
-                if (i < data.teams.length - 1) {
-                    teams += data.teams[i].team + " ";
-                } else {
-                    teams += data.teams[i].team;
+            if (data.mission != null) {
+                let teams = "[";
+                for (let i = 0; i < data.teams.length; i++) {
+                    if (i < data.teams.length - 1) {
+                        teams += data.teams[i].team + " ";
+                    } else {
+                        teams += data.teams[i].team;
+                    }
                 }
+                teams += "]";
+                $("#missionsTable #" + data.id).replaceWith('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.commander.firstName + ' ' + data.commander.lastName + '</td><td>' + data.mission + '</td><td>' + teams + '</td>' +
+                    '<td>' + data.startDate + '</td><td>' + (data.endDate ? data.endDate : 'W trakcie') + '</td><td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" onclick="endMission(event, ' + data.id + ')">Zakończ misję</button></td>' +
+                    '<td><button type="button" class="btn btn-danger update" onclick="deleteMission(event, ' + data.id + ')">Usuń</button></td></tr>');
+                swal("Wszytko przebiegło pomyślnie", "Zakończono misję", "success");
+            } else {
+                swal("Problem", data, "info");
             }
-            teams += "]";
-            $("#missionsTable #" + data.id).replaceWith('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.commander.firstName + ' ' + data.commander.lastName + '</td><td>' + data.mission + '</td><td>' + teams + '</td>' +
-                '<td>' + data.startDate + '</td><td>' + (data.endDate ? data.endDate : 'W trakcie') + '</td><td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" onclick="endMission(event, ' + data.id + ')">Zakończ misję</button></td>' +
-                '<td><button type="button" class="btn btn-danger update" onclick="deleteMission(event, ' + data.id + ')">Usuń</button></td></tr>');
-            swal("Wszytko przebiegło pomyślnie", "Zakończono misję", "success");
         }, error: () => {
             swal("Coś poszło nie tak", "Błąd", "error");
         }

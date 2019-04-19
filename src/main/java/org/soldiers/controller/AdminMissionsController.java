@@ -7,16 +7,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/admin/missions")
 public class AdminMissionsController {
-    @Autowired
     private MissionRepository missionRepository;
+
+    @Autowired
+    public AdminMissionsController(MissionRepository missionRepository) {
+        this.missionRepository = missionRepository;
+    }
 
     @GetMapping("/{id}")
     public Mission getMissionById(@PathVariable Long id) {
@@ -42,12 +42,12 @@ public class AdminMissionsController {
     }
 
     @PutMapping("/{id}")
-    public Object updateMission(@PathVariable Long id, @ModelAttribute("missionForm") @Valid Mission mission, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return bindingResult.getAllErrors();
-        }
+    public Object updateMission(@PathVariable Long id) {
         try {
             Mission m1 = missionRepository.findById(id).get();
+            if (m1.getEndDate() != null) {
+                return "Misja już jest zakończona";
+            }
             java.util.Date d = new java.util.Date();
             java.sql.Date sd = new java.sql.Date(d.getTime());
             m1.setEndDate(sd);

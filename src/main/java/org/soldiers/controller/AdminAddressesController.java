@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/addresses")
 public class AdminAddressesController {
-    @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    public AdminAddressesController(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
 
     @GetMapping("/searchByCity/{city}")
     public List<Address> getByCity(@PathVariable String city) {

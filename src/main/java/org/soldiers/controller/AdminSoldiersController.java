@@ -15,17 +15,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/soldiers")
 public class AdminSoldiersController {
-    @Autowired
     private SoldierRepository soldierRepository;
-
-    @Autowired
     private RankRepository rankRepository;
-
-    @Autowired
     private AddressRepository addressRepository;
+    private TeamRepository teamRepository;
 
     @Autowired
-    private TeamRepository teamRepository;
+    public AdminSoldiersController(SoldierRepository soldierRepository, RankRepository rankRepository, AddressRepository addressRepository, TeamRepository teamRepository) {
+        this.soldierRepository = soldierRepository;
+        this.rankRepository = rankRepository;
+        this.addressRepository = addressRepository;
+        this.teamRepository = teamRepository;
+    }
 
     @GetMapping("/searchByLastName/{lastName}")
     public List<Soldier> getSoldierByLastName(@PathVariable String lastName) {

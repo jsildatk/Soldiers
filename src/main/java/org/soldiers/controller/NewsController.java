@@ -17,11 +17,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/news")
 public class NewsController {
-    @Autowired
     private NewsRepository newsRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public NewsController(NewsRepository newsRepository, UserRepository userRepository) {
+        this.newsRepository = newsRepository;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("")
     public String newsPage(Principal principal, Model model) {

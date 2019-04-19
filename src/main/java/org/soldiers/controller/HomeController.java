@@ -4,7 +4,6 @@ import org.soldiers.model.Soldier;
 import org.soldiers.model.User;
 import org.soldiers.repository.SoldierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -18,8 +17,12 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    @Autowired
     private SoldierRepository soldierRepository;
+
+    @Autowired
+    public HomeController(SoldierRepository soldierRepository) {
+        this.soldierRepository = soldierRepository;
+    }
 
     @GetMapping("/")
     public String homePage(Model model) {

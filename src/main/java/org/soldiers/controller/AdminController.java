@@ -5,39 +5,34 @@ import org.soldiers.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private NewsRepository newsRepository;
-
-    @Autowired
     private SoldierRepository soldierRepository;
-
-    @Autowired
     private RankRepository rankRepository;
-
-    @Autowired
     private AddressRepository addressRepository;
-
-    @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
     private RoleRepository roleRepository;
+    private MissionRepository missionRepository;
 
     @Autowired
-    private MissionRepository missionRepository;
+    public AdminController(UserRepository userRepository, NewsRepository newsRepository, SoldierRepository soldierRepository, RankRepository rankRepository, AddressRepository addressRepository, TeamRepository teamRepository, RoleRepository roleRepository, MissionRepository missionRepository) {
+        this.userRepository = userRepository;
+        this.newsRepository = newsRepository;
+        this.soldierRepository = soldierRepository;
+        this.rankRepository = rankRepository;
+        this.addressRepository = addressRepository;
+        this.teamRepository = teamRepository;
+        this.roleRepository = roleRepository;
+        this.missionRepository = missionRepository;
+    }
 
     @GetMapping("")
     public String adminHomePage(Principal principal, Model model) {
