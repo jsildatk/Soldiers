@@ -31,28 +31,20 @@ public class RegistrationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/checkUsername/{username}")
-    public String checkUsername(@PathVariable String username) {
-        User u = userRepository.findByUsername(username);
-        if (u == null) {
-            return "";
-        }
-        return "Istnieje już taki użytkownik w bazie";
+    @GetMapping("/username/{username}")
+    public User checkUsername(@PathVariable String username) {
+        return userRepository.findByUsername(username);
     }
 
-    @GetMapping("/checkEmail/{email}")
-    public String checkEmail(@PathVariable String email) {
-        User u = userRepository.findByEmail(email);
-        if (u == null) {
-            return "";
-        }
-        return "Istnieje już użytkownik o takim adresie e-mail";
+    @GetMapping("/email/{email}")
+    public User checkEmail(@PathVariable String email) {
+        return userRepository.findByEmail(email);
     }
 
     @PostMapping("/register")
-    public String register(@Valid User user, BindingResult bindingResult) {
+    public Object register(@Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "Coś poszło nie tak";
+            return bindingResult.getAllErrors();
         }
         try {
             Role role = roleRepository.findByRole("SOLDIER");
@@ -60,11 +52,10 @@ public class RegistrationController {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole(role);
             soldier.setUser(user);
-            soldierRepository.save(soldier);
-            return "Zarejestrowałeś/aś się";
+            return soldierRepository.save(soldier);
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
-            return "Coś poszło nie tak";
+            return null;
         }
     }
 }

@@ -24,13 +24,15 @@ checkUsername = () => {
 
     return $.ajax({
         type: 'GET',
-        url: 'registration/checkUsername/' + username,
-        success: (msg) => {
-            if (msg == 'Istnieje już taki użytkownik w bazie') {
+        url: 'registration/username/' + username,
+        success: (data) => {
+            if (data.username != null) {
                 submit.prop('disabled', true);
+                response.html("Istnieje już taki użytkownik");
                 response.css('color', '#CE1A06');
+            } else {
+                response.html("");
             }
-            response.html(msg);
         }
     });
 }
@@ -43,13 +45,15 @@ checkEmail = () => {
 
     return $.ajax({
         type: 'GET',
-        url: 'registration/checkEmail/' + email,
-        success: (msg) => {
-            if (msg == 'Istnieje już użytkownik o takim adresie e-mail') {
+        url: 'registration/email/' + email,
+        success: (data) => {
+            if (data.email != null) {
+                response.html("Istnieje już użytkownik o takim adresie email");
                 submit.prop('disabled', true);
                 response.css('color', '#CE1A06');
+            } else {
+                response.html("");
             }
-            response.html(msg);
         }
     });
 }
@@ -134,11 +138,15 @@ $(() => {
             data: $('#register-form').serialize(),
             type: $('#register-form').attr('method'),
             url: $('#register-form').attr('action'),
-            success: (msg) => {
-                if (msg == 'Zarejestrowałeś/aś się') {
-                    swal(msg, 'Możesz się teraz zalogować', 'success');
+            success: (data) => {
+                if (data.user != null) {
+                    swal("Zarejestrowałeś/aś się", 'Możesz się teraz zalogować', 'success');
                 } else {
-                    swal(msg, 'Spróbuj ponownie', 'error');
+                    let validation = "";
+                    for (let i = 0; i < data.length; i++) {
+                        validation += "* " + data[i].defaultMessage + "\n";
+                    }
+                    swal("Wystąpił problem z walidacją", validation , "info");
                 }
             },
             error: () => {
