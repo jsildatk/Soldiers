@@ -94,4 +94,14 @@ public class AdminController {
         model.addAttribute("missionForm", new Mission());
         return "admin/missions";
     }
+
+    @GetMapping("/teams")
+    public String adminTeamsPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Team> teams = teamRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("teams", teams);
+        model.addAttribute("formTeam", new Team());
+        return "admin/teams";
+    }
 }

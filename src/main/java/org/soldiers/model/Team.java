@@ -1,5 +1,7 @@
 package org.soldiers.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.HashSet;
@@ -17,7 +19,8 @@ public class Team {
     @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'grupa' musi się zaczynać z dużej litery oraz nie może zawierać cyfr")
     private String team;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "teams")
+    @JsonBackReference
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY, mappedBy = "teams")
     Set<Mission> missions = new HashSet<>();
 
     public Team(@Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'grupa' musi się zaczynać z dużej litery oraz nie może zawierać cyfr") String team, Set<Mission> missions) {

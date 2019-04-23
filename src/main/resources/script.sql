@@ -65,7 +65,7 @@ CREATE TABLE soldier (
     user_id INT DEFAULT NULL UNIQUE,
     rank_id INT NOT NULL,
     address_id INT NOT NULL,
-    team_id INT NOT NULL,
+    team_id INT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     personal_evidence_number CHAR(11) UNIQUE NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE item_soldier (
 
 CREATE TABLE mission (
 	mission_id INT AUTO_INCREMENT,
-    commander_id INT NOT NULL,
+    commander_id INT NOT NULL UNIQUE,
     mission VARCHAR(40) UNIQUE NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE DEFAULT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE mission_team (
     team_id INT NOT NULL,
     PRIMARY KEY (mission_id, team_id),
     FOREIGN KEY (mission_id) REFERENCES mission (mission_id) ON DELETE CASCADE,
-    FOREIGN KEY (team_id) REFERENCES team (team_id)
+    FOREIGN KEY (team_id) REFERENCES team (team_id) ON DELETE CASCADE
 ) DEFAULT CHARSET=UTF8;
 
 CREATE TABLE news (
@@ -134,10 +134,10 @@ INSERT INTO team (team) VALUES ('Gromowładni'), ('Gniewni'), ('Bezlitośni');
 INSERT INTO user (user_id, role_id, username, password, email) VALUES (0, 1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl'), 
 	(1, 2, 'romek', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'romek@wojsko.pl');
 INSERT INTO soldier (user_id, rank_id, address_id, team_id, first_name, last_name, personal_evidence_number, birth_date) VALUES 
-(1, 1, 1, 1, 'Roman', 'Mekdzejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25'), (null, 3, 3,3 , 'Dariusz', 'Ruszka', '77292555233', '1977-09-25');
+(1, 1, 1, 1, 'Roman', 'Mekdzejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25'), (null, 3, 3, 2 , 'Dariusz', 'Ruszka', '77292555233', '1977-09-25');
 INSERT INTO news (user_id, title, content, add_date) VALUES (0, 'Przerwa techniczna', 'Dnia 25.05.2019 od godziny 11:00 
 	do godziny 18:00 będzie trwała przerwa techniczna w działaniu strony. Za niedogodności przepraszamy.', '2019-08-04 21:05:56'),
     (0, 'Bal maskowy', 'Dnia 30.04.2019 w sali balowej w Warszawie odbędzie się bal maskowy. Zapisy na adres mailowy "bal@wojsko.pl"', '2019-02-03 16:23:12');
 INSERT INTO mission (commander_id, mission, start_date) VALUES (1, 'Burza', '2013-07-22');
-INSERT INTO mission (commander_id, mission, start_date, end_date) VALUES (1, 'Pustynna zadyma', '2013-07-22', '2015-02-19');
+INSERT INTO mission (commander_id, mission, start_date, end_date) VALUES (2, 'Pustynna zadyma', '2013-07-22', '2015-02-19');
 INSERT INTO mission_team (mission_id, team_id) VALUES (1, 1), (2, 2), (1, 2);

@@ -14,7 +14,7 @@ public class Soldier {
     @Column(name = "soldier_id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -27,7 +27,7 @@ public class Soldier {
     private Address address;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "team_id", nullable = false)
+    @JoinColumn(name = "team_id")
     private Team team;
 
     @Column(name = "first_name", nullable = false)
@@ -129,12 +129,5 @@ public class Soldier {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Soldier(" + this.user + "\nAddress: " + this.address.getStreet() + " " + this.address.getCity() + " " + this.address.getPostalCode() + "\n" +
-                "Rank: " + this.rank.getRank() + "\nTeam: " + this.team.getTeam() + "\nData: " + this.firstName + " " + this.lastName + " " + this.personalEvidenceNumber +
-                " " + this.birthDate + ")";
     }
 }

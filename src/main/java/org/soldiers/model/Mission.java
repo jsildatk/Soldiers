@@ -1,7 +1,6 @@
 package org.soldiers.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -9,7 +8,6 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "mission")
 public class Mission {
@@ -18,15 +16,16 @@ public class Mission {
     @Column(name = "mission_id")
     private Long id;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
     @JoinTable(
             name = "mission_team",
-            joinColumns = { @JoinColumn(name = "mission_id") },
-            inverseJoinColumns = { @JoinColumn(name = "team_id") }
+            joinColumns = { @JoinColumn(name = "mission_id", referencedColumnName = "mission_id") },
+            inverseJoinColumns = { @JoinColumn(name = "team_id", referencedColumnName = "team_id") }
     )
+    @JsonManagedReference
     private Set<Team> teams = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "commander_id", nullable = false)
     private Soldier commander;
 
