@@ -10,4 +10,5 @@ import java.util.List;
 public interface NewsRepository extends CrudRepository<News, Long> {
     List<News> findAll();
     News findFirstByOrderByAddDateDesc();
+    News findByTitle(String title);
 }

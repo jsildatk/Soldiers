@@ -1,6 +1,7 @@
 package org.soldiers.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "news"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -20,7 +22,6 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonIgnore
     private Set<News> news;
 
     @Column(name = "username", nullable = false)
@@ -30,6 +31,7 @@ public class User {
     @Column(name = "password", nullable = false, length = 60)
     @NotNull
     @Size(min = 8)
+    @JsonIgnore
     private String password;
 
     @Column(name = "email", nullable = false, unique = true)

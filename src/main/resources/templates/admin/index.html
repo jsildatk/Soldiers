@@ -58,18 +58,18 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th class="text-info font-italic font-weight-bold h1" th:text="${news.title}"></th>
+                        <th th:if="${news}" class="text-info font-italic font-weight-bold h1" th:text="${news.title}"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td th:text="${news.content}"></td>
+                        <td th:if="${news}" th:text="${news.content}"></td>
                     </tr>
                     <tr>
-                        <td th:text="'Dodał: ' + ${news.user.getUsername()}"></td>
+                        <td th:if="${news}" th:text="'Dodał: ' + ${news.user.username}"></td>
                     </tr>
                     <tr>
-                        <td th:text="'Data dodania: ' + ${news.addDate}"></td>
+                        <td th:if="${news}" th:text="'Data dodania: ' + ${news.addDate}"></td>
                     </tr>
                     <tr>
                         <td><a class="text-success h4" th:href="@{/news}" th:text="'Wszystkie aktualności'"></a></td>

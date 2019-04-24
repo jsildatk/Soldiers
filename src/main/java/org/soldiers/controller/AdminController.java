@@ -104,4 +104,14 @@ public class AdminController {
         model.addAttribute("formTeam", new Team());
         return "admin/teams";
     }
+
+    @GetMapping("/news")
+    public String adminNewsPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<News> news = newsRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("news", news);
+        model.addAttribute("formNews", new News());
+        return "admin/news";
+    }
 }
