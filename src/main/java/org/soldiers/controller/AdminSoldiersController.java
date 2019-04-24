@@ -1,9 +1,6 @@
 package org.soldiers.controller;
 
-import org.soldiers.model.Address;
-import org.soldiers.model.Rank;
 import org.soldiers.model.Soldier;
-import org.soldiers.model.Team;
 import org.soldiers.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;

@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS mission_team;
 DROP TABLE IF EXISTS mission;
 DROP TABLE IF EXISTS soldier;
 DROP TABLE IF EXISTS address;
-DROP TABLE IF EXISTS rank;
+DROP TABLE IF EXISTS `rank`;
 DROP TABLE IF EXISTS team;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS news;
@@ -31,9 +31,9 @@ CREATE TABLE team (
     PRIMARY KEY (team_id)
 ) DEFAULT CHARSET=UTF8;
 
-CREATE TABLE rank (
+CREATE TABLE `rank` (
 	rank_id INT AUTO_INCREMENT,
-    rank VARCHAR(40) UNIQUE NOT NULL,
+    `rank` VARCHAR(40) UNIQUE NOT NULL,
     PRIMARY KEY (rank_id)
 ) DEFAULT CHARSET=UTF8;
 
@@ -64,7 +64,7 @@ CREATE TABLE soldier (
 	soldier_id INT AUTO_INCREMENT,
     user_id INT DEFAULT NULL UNIQUE,
     rank_id INT NOT NULL,
-    address_id INT NOT NULL,
+    address_id INT,
     team_id INT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE item_soldier (
 
 CREATE TABLE mission (
 	mission_id INT AUTO_INCREMENT,
-    commander_id INT NOT NULL UNIQUE,
+    commander_id INT NOT NULL,
     mission VARCHAR(40) UNIQUE NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE DEFAULT NULL,

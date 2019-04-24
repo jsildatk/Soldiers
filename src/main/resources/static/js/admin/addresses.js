@@ -95,12 +95,16 @@ deleteAddress = (e, addressId) => {
     $.ajax({
         type: "DELETE",
         url: "/admin/addresses/" + addressId,
-        success: (msg) => {
-            swal("Usunięto", msg, "success");
-            $("tr[id="+addressId+"]").remove();
+        success: (data) => {
+            if (data != "Coś poszło nie tak") {
+                swal("Usunięto", data, "success");
+                $("tr[id=" + addressId + "]").remove();
+            } else {
+                swal("Wystąpił błąd", data, "error");
+            }
         },
-        error: (msg) => {
-            swal("Wystąpił błąd", msg, "error");
+        error: () => {
+            swal("Wystąpił błąd", "Wystąpił błąd serwera", "error");
         }
     });
 }

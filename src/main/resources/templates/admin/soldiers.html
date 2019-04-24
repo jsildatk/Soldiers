@@ -86,8 +86,10 @@
                                 <td th:text="${s.rank.rank}"></td>
                                 <td th:text="${s.personalEvidenceNumber}"></td>
                                 <td th:text="${s.birthDate}"></td>
-                                <td th:text="${s.address.street + ' ' + s.address.city + ' ' + s.address.postalCode}"></td>
-                                <td th:text="${s.team.team}"></td>
+                                <td th:if="${s.address}" th:text="${s.address.street + ' ' + s.address.city + ' ' + s.address.postalCode}"></td>
+                                <td th:unless="${s.address}" th:text="'Brak'"></td>
+                                <td th:if="${s.team}" th:text="${s.team.team}"></td>
+                                <td th:unless="${s.team}" th:text="'Brak'"></td>
                                 <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateSoldier(event,'+${s.id}+')'">Edytuj</button></td>
                                 <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteSoldier(event,'+${s.id}+')'">Usuń</button></td>
                             </tr>
@@ -153,9 +155,11 @@
                             <option th:each = "r : ${ranks}" th:value = "${r.id}" th:text = "${r.rank}" />
                         </select>
                         <select th:field = "*{address}" class = "form-control" id="address" required>
+                            <option disabled="disabled" hidden="hidden" value="Brak"> Brak </option>
                             <option th:each = "a : ${addresses}" th:value = "${{a}}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
                         </select>
                         <select th:field = "*{team}" class = "form-control" id="team" required>
+                            <option disabled="disabled" hidden="hidden" value="Brak"> Brak </option>
                             <option th:each = "t : ${teams}" th:value = "${{t}}" th:text = "${t.team}" />
                         </select>
                         <input type="hidden" th:field="*{id}" />

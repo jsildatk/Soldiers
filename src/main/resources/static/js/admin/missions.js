@@ -98,11 +98,15 @@ deleteMission = (e, missionId) => {
         url: "/admin/missions/" + missionId,
         type: "DELETE",
         success: (data) => {
-            swal("Usunięto", data, "success");
-            $("tr[id="+missionId+"]").remove();
+            if (data != "Coś poszło nie tak") {
+                swal("Usunięto", data, "success");
+                $("tr[id=" + missionId + "]").remove();
+            } else {
+                swal("Wystąpił błąd", data, "error");
+            }
         },
-        error: (data) => {
-            swal("Wystąpił błąd", data, "error");
+        error: () => {
+            swal("Wystąpił błąd", "Błąd serwera", "error");
         }
     });
 }

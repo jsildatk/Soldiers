@@ -1,7 +1,9 @@
 package org.soldiers.controller;
 
 import org.soldiers.model.Address;
+import org.soldiers.model.Soldier;
 import org.soldiers.repository.AddressRepository;
+import org.soldiers.repository.SoldierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,12 @@ import java.util.List;
 @RequestMapping("/admin/addresses")
 public class AdminAddressesController {
     private AddressRepository addressRepository;
+    private SoldierRepository soldierRepository;
 
     @Autowired
-    public AdminAddressesController(AddressRepository addressRepository) {
+    public AdminAddressesController(AddressRepository addressRepository, SoldierRepository soldierRepository) {
         this.addressRepository = addressRepository;
+        this.soldierRepository = soldierRepository;
     }
 
     @GetMapping("/city/{city}")
@@ -62,6 +66,9 @@ public class AdminAddressesController {
     @DeleteMapping("/{id}")
     public String deleteById(@PathVariable Long id) {
         try {
+            for (Soldier s : soldierRepository.findByAddress(addressRepository.findById(id).get())) {
+                s.setAddress(null);
+            }
             addressRepository.deleteById(id);
             return "Usunięto adres o id: " + id;
         } catch (Exception e) {

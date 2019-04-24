@@ -125,7 +125,7 @@ deleteTeam = (e, teamId) => {
             }
         },
         error: () => {
-            swal("Wystąpił błąd", "Coś poszło nie tak", "error");
+            swal("Wystąpił błąd", "Błąd serwera", "error");
         }
     });
 }

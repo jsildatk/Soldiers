@@ -7,7 +7,6 @@ import org.soldiers.repository.MissionRepository;
 import org.soldiers.repository.SoldierRepository;
 import org.soldiers.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
