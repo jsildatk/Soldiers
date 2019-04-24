@@ -1,4 +1,4 @@
-package org.soldiers.controller;
+package org.soldiers.controller.rest;
 
 import org.soldiers.model.Address;
 import org.soldiers.model.Soldier;

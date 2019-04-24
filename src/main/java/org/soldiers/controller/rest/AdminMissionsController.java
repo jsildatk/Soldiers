@@ -1,4 +1,4 @@
-package org.soldiers.controller;
+package org.soldiers.controller.rest;
 
 import org.soldiers.model.Mission;
 import org.soldiers.repository.MissionRepository;

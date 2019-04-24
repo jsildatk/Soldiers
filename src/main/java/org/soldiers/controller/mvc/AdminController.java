@@ -1,4 +1,4 @@
-package org.soldiers.controller;
+package org.soldiers.controller.mvc;
 
 import org.soldiers.model.*;
 import org.soldiers.repository.*;
