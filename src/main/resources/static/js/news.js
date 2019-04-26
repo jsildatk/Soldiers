@@ -11,7 +11,7 @@ convertDate = (date) => {
 searchNews = () => {
     let title = $("#searchNews").val();
     $.ajax({
-        url: "/admin/news/title/" + title,
+        url: "/news/rest/title/" + title,
         type: "GET",
         success: (data) => {
             if (data != "") {
@@ -31,7 +31,7 @@ searchNews = () => {
 getContent = (e, newsId) => {
     e.preventDefault();
     $.ajax({
-        url: "/admin/news/" + newsId,
+        url: "/news/rest/" + newsId,
         type: "GET",
         success: (data) => {
             $("#contentModal .modal-body").html(data.content);
@@ -75,7 +75,7 @@ $(() => {
                 title: $("#updateNewsForm #title").val(),
                 content: $("#updateNewsForm #content").val()
             },
-            url: "/admin/news/" + $("#updateNewsForm #id").val(),
+            url: "/news/rest/" + $("#updateNewsForm #id").val(),
             type: "PUT",
             success: (data) => {
                 if (data.title != null) {
@@ -103,7 +103,7 @@ $(() => {
 updateNews = (e, newsId) => {
     e.preventDefault();
     $.ajax({
-        url: "/admin/news/" + newsId,
+        url: "/news/rest/" + newsId,
         type: "GET",
         success: (data) => {
             $("#updateNewsForm #title").val(data.title);
@@ -116,7 +116,7 @@ updateNews = (e, newsId) => {
 deleteNews = (e, newsId) => {
     e.preventDefault();
     $.ajax({
-        url: "/admin/news/" + newsId,
+        url: "/news/rest/" + newsId,
         type: "DELETE",
         success: (data) => {
             if (data == "Coś poszło nie tak") {

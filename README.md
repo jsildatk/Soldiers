@@ -9,6 +9,7 @@ Web application for managing a military system (soldiers, users, teams, missions
 - Spring Boot
 - Spring Data
 - Spring MVC
+- Spring REST
 - Spring Security
 - Thymeleaf
 - MySQL
@@ -52,12 +53,12 @@ Not logged user (soldier) can only proceed through registration process but only
 - create, delete and end mission
 - create, update and delete team
 - create and update or delete any news
-## Commander has privileges to: (*)
-- check and update personal data
-- check team
+## Commander has privileges to:
+- check and update personal data (*)
+- check team (*)
 - create and update or delete own news
-- manage missions
-- manage equipment
+- manage missions (*)
+- manage equipment (*)
 ## Soldier has privileges to: (*)
 - check and update personal data
 - check team

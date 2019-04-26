@@ -24,6 +24,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<News> news;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private Soldier soldier;
+
     @Column(name = "username", nullable = false)
     @NotNull
     private String username;
@@ -106,6 +110,14 @@ public class User {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Soldier getSoldier() {
+        return soldier;
+    }
+
+    public void setSoldier(Soldier soldier) {
+        this.soldier = soldier;
     }
 
     @Override

@@ -15,31 +15,25 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li>
-                <a class="nav-link" th:href="@{/admin}"> Strona główna </a>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/commander}"> Strona główna </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/soldiers}"> Żołnierze </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/users}"> Użytkownicy </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/addresses}"> Adresy </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/missions}"> Misje </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/teams}"> Grupy </a>
+                <a class="nav-link" th:href="@{/personalData}"> Dane osobowe </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/news}"> Aktualności </a>
+                <a class="nav-link" th:href="@{/commander/news}"> Ogłoszenia </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/commander/missions}"> Misje </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/equipment}"> Wyposażenie </a>
             </li>
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" th:href="@{#}"> PANEL ADMINISTRATORA </a>
+        <a class="navbar-brand mx-auto" th:href="@{#}"> PANEL DOWÓDCY </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -65,11 +59,6 @@
     <div class="row">
         <div class = "col-12 p-0">
             <div class = "jumbotron min-vh-100 text-center d-flex flex-column">
-                <div class = "row">
-                    <div class="col-12 p-0">
-                        <input type="text" placeholder="Szukaj po tytule" id="searchNews"> <button type="button" class="btn btn-primary" onclick="searchNews()"> Szukaj </button>
-                    </div>
-                </div>
                 <table class="table table-hover table-striped sortable" id="newsTable">
                     <thead class="thead-dark">
                     <tr>

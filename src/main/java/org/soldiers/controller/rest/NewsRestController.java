@@ -11,8 +11,8 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/admin/news")
-public class AdminNewsController {
+@RequestMapping("/news/rest")
+public class NewsRestController {
     private NewsRepository newsRepository;
     private UserRepository userRepository;
 
@@ -22,7 +22,7 @@ public class AdminNewsController {
     }
 
     @Autowired
-    public AdminNewsController(NewsRepository newsRepository, UserRepository userRepository) {
+    public NewsRestController(NewsRepository newsRepository, UserRepository userRepository) {
         this.newsRepository = newsRepository;
         this.userRepository = userRepository;
     }
