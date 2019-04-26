@@ -1,7 +1,9 @@
 package org.soldiers.controller.mvc;
 
+import org.soldiers.model.Address;
 import org.soldiers.model.Soldier;
 import org.soldiers.model.User;
+import org.soldiers.repository.AddressRepository;
 import org.soldiers.repository.SoldierRepository;
 import org.soldiers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,13 @@ import java.util.List;
 public class HomeController {
     private SoldierRepository soldierRepository;
     private UserRepository userRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
-    public HomeController(SoldierRepository soldierRepository, UserRepository userRepository) {
+    public HomeController(SoldierRepository soldierRepository, UserRepository userRepository, AddressRepository addressRepository) {
         this.soldierRepository = soldierRepository;
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     @GetMapping("/")
@@ -41,6 +45,16 @@ public class HomeController {
         User user = userRepository.findByUsername(principal.getName());
         model.addAttribute("user", user);
         return "settings";
+    }
+
+    @GetMapping("/personalData")
+    public String soldierPersonalDataPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Address> addresses = addressRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("soldier", user.getSoldier());
+        model.addAttribute("addresses", addresses);
+        return "personalData";
     }
 
     @GetMapping("/403")

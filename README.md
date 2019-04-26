@@ -54,7 +54,7 @@ Not logged user (soldier) can only proceed through registration process but only
 - create, update and delete team
 - create and update or delete any news
 ## Commander has privileges to:
-- check and update personal data (*)
+- check and update personal data
 - check team (*)
 - create and update or delete own news
 - manage missions (*)

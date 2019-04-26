@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang = "pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Dane osobowe </title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/user.css" />
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/js/personalData.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}"> Strona główna </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/commander}"> Panel dowódcy </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/soldier}"> Panel żołnierza </a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" th:href="@{#}"> DANE OSOBOWE </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/news}" th:text="${'Aktualności'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{#}" th:text="${'Zalogowany jako:' + ' ' + user.username + ' (' + user.email + ')'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}" th:text="${'Wyloguj'}" />
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class = "col-12 p-0">
+            <div class = "jumbotron min-vh-100 text-center d-flex flex-column justify-content-center">
+                <div class = "row">
+                    <div class="col-12 p-0">
+                        <p style="color: red;"> Jeżeli nie widzisz swojego adresu skontaktuj się z administratorem! </p>
+                    </div>
+                </div>
+                <form id="updateSoldierData" role="form" th:object="${soldier}">
+                    <div class="form-group">
+                        <label for="firstName"> Imię </label>
+                        <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName"> Nazwisko </label>
+                        <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="rank"> Ranga </label>
+                        <input type="text" class="form-control" id="rank" th:value="${soldier.rank.rank}" disabled required />
+                    </div>
+                    <div class="form-group">
+                        <label for="personalEvidenceNumber"> Pesel </label>
+                        <input type="text" class="form-control" id="personalEvidenceNumber" th:field="*{personalEvidenceNumber}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate"> Data urodzenia </label>
+                        <input type="date" class="form-control" id="birthDate" th:field="*{birthDate}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="address"> Adres </label>
+                        <select th:field = "*{address}" id="address" class = "form-control" required>
+                            <option th:each = "a : ${addresses}" th:value = "${{a}}" th:text = "${a.street + ' ' + a.city + ' ' + a.postalCode}" />
+                        </select>
+                    </div>
+                    <input type="hidden" th:field="*{id}" id="id" />
+                    <button type="submit" class="btn btn-primary"> Edytuj </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="fixed-bottom">
+    <div class="container text-center font-italic">
+        <p class="h3"> © 2019 Copyright: <a class="text-warning font-weight-bold" th:href="@{https://github.com/jsildatk}"> Fajna firma </a></p>
+    </div>
+</footer>
+</body>
+</html>
