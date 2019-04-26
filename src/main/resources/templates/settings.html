@@ -1,41 +1,34 @@
 <!DOCTYPE html>
 <html lang = "pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Strona administratora </title>
-    <meta charset="UTF-8">
+    <title> Ustawienia konta </title>
+    <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/user.css" />
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/js/settings.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin}"> Strona główna </a>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}"> Strona główna </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/soldiers}"> Żołnierze </a>
+                <a class="nav-link" th:href="@{/admin}"> Panel administratora </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/users}"> Użytkownicy </a>
+                <a class="nav-link" th:href="@{/commander}"> Panel dowódcy </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/addresses}"> Adresy </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/missions}"> Misje </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/teams}"> Grupy </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/news}"> Aktualności </a>
+                <a class="nav-link" th:href="@{/soldier}"> Panel żołnierza </a>
             </li>
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" th:href="@{#}"> PANEL ADMINISTRATORA </a>
+        <a class="navbar-brand mx-auto" th:href="@{#}"> USTAWIENIA </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -45,7 +38,7 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/news}" th:text="${'Aktualności'}" />
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
             </li>
             <li class="nav-item">
@@ -61,27 +54,25 @@
     <div class="row">
         <div class = "col-12 p-0">
             <div class = "jumbotron min-vh-100 text-center d-flex flex-column justify-content-center">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th th:if="${news}" class="text-info font-italic font-weight-bold h1" th:text="${news.title}"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td th:if="${news}" th:text="${news.content}"></td>
-                    </tr>
-                    <tr>
-                        <td th:if="${news}" th:text="'Dodał: ' + ${news.user.username}"></td>
-                    </tr>
-                    <tr>
-                        <td th:if="${news}" th:text="'Data dodania: ' + ${news.addDate}"></td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-success h4" th:href="@{/news}" th:text="'Wszystkie aktualności'"></a></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <form id="updateUserForm" role="form" th:object="${user}">
+                    <div class="form-group">
+                        <label for="username"> Nazwa użytkownika </label>
+                        <input type="text" class="form-control" id="username" th:value="${user.username}" th:field="*{username}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email"> Adres e-mail </label>
+                        <input type="email" class="form-control" id="email" th:value="${user.email}" th:field="*{email}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="role"> Rola </label>
+                        <input type="text" class="form-control" id="role" th:value="${user.role.role}" disabled />
+                    </div>
+                    <input type="hidden" th:field="*{id}" id="id" />
+                    <button type="submit" class="btn btn-primary"> Edytuj </button>
+                </form>
+                <div class="col-xs-3">
+                    <button class="btn btn-info" th:onclick="'changePassword('+${user.id}+')'"> Zmień hasło </button>
+                </div>
             </div>
         </div>
     </div>

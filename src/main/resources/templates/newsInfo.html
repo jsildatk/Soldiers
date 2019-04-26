@@ -15,7 +15,7 @@
                 <a class="nav-link" th:href="@{/}"> Strona główna </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/}"> Panel administratora </a>
+                <a class="nav-link" th:href="@{/admin}"> Panel administratora </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/commander}"> Panel dowódcy </a>
@@ -33,6 +33,12 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/news}" th:text="${'Aktualności'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
+            </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{#}" th:text="${'Zalogowany jako:' + ' ' + user.username + ' (' + user.email + ')'}" />
             </li>

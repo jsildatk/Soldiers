@@ -3,6 +3,7 @@ package org.soldiers.controller.mvc;
 import org.soldiers.model.Soldier;
 import org.soldiers.model.User;
 import org.soldiers.repository.SoldierRepository;
+import org.soldiers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,15 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 public class HomeController {
     private SoldierRepository soldierRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public HomeController(SoldierRepository soldierRepository) {
+    public HomeController(SoldierRepository soldierRepository, UserRepository userRepository) {
         this.soldierRepository = soldierRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/")
@@ -30,6 +34,13 @@ public class HomeController {
         model.addAttribute("soldiers", soldiers);
         model.addAttribute("user", new User());
         return "index";
+    }
+
+    @GetMapping("/settings")
+    public String userSettingsPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        return "settings";
     }
 
     @GetMapping("/403")

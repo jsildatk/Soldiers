@@ -3,7 +3,7 @@ Web application for managing a military system (soldiers, users, teams, missions
 ## How it works
 1) HTTP request is send from client side using AJAX (GET, POST, PUT, DELETE)
 2) Rest controller on server side process the request and send response as JSON
-3) Reponse message depends on result (e.g. a validation error)
+3) Response message depends on result (e.g. a validation error)
 4) If everything went well - table is updated without any refresh
 ## Used technologies
 - Spring Boot
@@ -44,14 +44,14 @@ password: zaq1@WSX
 Not logged user (soldier) can only proceed through registration process but only if he is already in database. He cannot just come and register for military system - administrator has to add him before.
 ## Any user has privileges to:
 - check news
-- change user's setting (*)
+- change user's setting
 ## Administrator has privileges to:
 - create, update and delete soldier
 - change user's role and disable account if needed
 - create, update and delete address
 - create, delete and end mission
-- create, update and delete team (*)
-- create and update or delete any news (*)
+- create, update and delete team
+- create and update or delete any news
 ## Commander has privileges to: (*)
 - check and update personal data
 - check team
