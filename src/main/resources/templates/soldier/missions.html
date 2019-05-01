@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang = "pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Strona żołnierza </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/user.css" />
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/js/sortable.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/commander}"> Strona główna </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/personalData}"> Dane osobowe </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/soldier/missions}"> Misje </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/equipment}"> Wyposażenie </a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" th:href="@{#}"> PANEL ŻOŁNIERZA </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/news}" th:text="${'Aktualności'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{#}" th:text="${'Zalogowany jako:' + ' ' + user.username + ' (' + user.email + ')'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}" th:text="${'Wyloguj'}" />
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class = "col-12 p-0">
+            <div class = "jumbotron min-vh-100 text-center d-flex flex-column">
+                <table class="table table-hover table-striped sortable" id="missionsTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Nazwa'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Grupy'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Data rozpoczęcia'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Data zakończenia'"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="m : ${missions}">
+                        <tr th:id="${m.id}">
+                            <td th:text="${m.mission}"></td>
+                            <td th:text="${m.teams}"></td>
+                            <td th:text="${m.startDate}"></td>
+                            <td th:if="${m.endDate}" th:text="${m.endDate}"></td>
+                            <td th:unless="${m.endDate}" th:text="'W trakcie'"></td>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="fixed-bottom">
+    <div class="container text-center font-italic">
+        <p class="h3"> © 2019 Copyright: <a class="text-warning font-weight-bold" th:href="@{https://github.com/jsildatk}"> Fajna firma </a></p>
+    </div>
+</footer>
+</body>
+</html>
