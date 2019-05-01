@@ -1,9 +1,11 @@
 package org.soldiers.controller.mvc;
 
 import org.soldiers.model.Address;
+import org.soldiers.model.Item;
 import org.soldiers.model.Soldier;
 import org.soldiers.model.User;
 import org.soldiers.repository.AddressRepository;
+import org.soldiers.repository.ItemRepository;
 import org.soldiers.repository.SoldierRepository;
 import org.soldiers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ public class HomeController {
     private SoldierRepository soldierRepository;
     private UserRepository userRepository;
     private AddressRepository addressRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    public HomeController(SoldierRepository soldierRepository, UserRepository userRepository, AddressRepository addressRepository) {
+    public HomeController(SoldierRepository soldierRepository, UserRepository userRepository, AddressRepository addressRepository, ItemRepository itemRepository) {
         this.soldierRepository = soldierRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
+        this.itemRepository = itemRepository;
     }
 
     @GetMapping("/")
@@ -55,6 +59,27 @@ public class HomeController {
         model.addAttribute("soldier", user.getSoldier());
         model.addAttribute("addresses", addresses);
         return "personalData";
+    }
+
+    @GetMapping("/equipment")
+    public String soldierEquipment(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Item> soldierItems = itemRepository.findBySoldiers(user.getSoldier());
+        List<Item> notSoldierItems = itemRepository.findBySoldiersNotContains(user.getSoldier());
+        String amount = "";
+        if (soldierItems.size() == 1) {
+            amount = " przedmiot";
+        } else if (soldierItems.size() > 1 && soldierItems.size() < 5) {
+            amount = " przedmioty";
+        } else {
+            amount = " przedmiotów";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("items", soldierItems);
+        model.addAttribute("notSoldierItems", notSoldierItems);
+        model.addAttribute("itemsAmount", soldierItems.size() + amount);
+        model.addAttribute("soldier", soldierRepository.findByUser(user));
+        return "equipment";
     }
 
     @GetMapping("/403")

@@ -1,10 +1,12 @@
 package org.soldiers.model;
 
-import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "soldier")
@@ -29,6 +31,15 @@ public class Soldier {
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "team_id")
     private Team team;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY, targetEntity = Item.class)
+    @JoinTable(
+            name = "item_soldier",
+            joinColumns = { @JoinColumn(name = "soldier_id", referencedColumnName = "soldier_id") },
+            inverseJoinColumns = { @JoinColumn(name = "item_id", referencedColumnName = "item_id") }
+    )
+    @JsonManagedReference
+    private Set<Item> items = new HashSet<>();
 
     @Column(name = "first_name", nullable = false)
     @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'imię' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
@@ -129,5 +140,13 @@ public class Soldier {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 }

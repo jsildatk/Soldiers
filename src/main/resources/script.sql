@@ -40,6 +40,7 @@ CREATE TABLE `rank` (
 CREATE TABLE item (
 	item_id INT AUTO_INCREMENT,
     item VARCHAR(30) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
     PRIMARY KEY (item_id)
 ) DEFAULT CHARSET=UTF8;
 
@@ -131,8 +132,8 @@ INSERT INTO address (street, city, postal_code) VALUES ('Wesoła 5', 'Sierakowic
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340'),
 ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), ('Wesoła 5', 'Sierakowice', '83-340');
 INSERT INTO team (team) VALUES ('Gromowładni'), ('Gniewni'), ('Bezlitośni');
-INSERT INTO user (user_id, role_id, username, password, email) VALUES (0, 1, 'admin', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl'), 
-	(1, 2, 'romek', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'romek@wojsko.pl');
+INSERT INTO user (user_id, role_id, username, password, email) VALUES (0, 1, 'admin_test', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'admin@wojsko.pl'), 
+	(1, 2, 'commander_test', '$2a$10$dA3G9eXf/eEG0kaOfE0tDOm02VrDvawOE.7239nPpdQUAwXHKKGmu', 'romek@wojsko.pl');
 INSERT INTO soldier (user_id, rank_id, address_id, team_id, first_name, last_name, personal_evidence_number, birth_date) VALUES 
 (1, 1, 1, 1, 'Roman', 'Mekdzejew', '86024999654', '1986-04-24'), (null, 2, 2, 2, 'Marcin', 'Ruszka', '77092555233', '1977-09-25'), (null, 3, 3, 2 , 'Dariusz', 'Ruszka', '77292555233', '1977-09-25');
 INSERT INTO news (user_id, title, content, add_date) VALUES (0, 'Przerwa techniczna', 'Dnia 25.05.2019 od godziny 11:00 
@@ -141,3 +142,7 @@ INSERT INTO news (user_id, title, content, add_date) VALUES (0, 'Przerwa technic
 INSERT INTO mission (commander_id, mission, start_date) VALUES (1, 'Burza', '2013-07-22');
 INSERT INTO mission (commander_id, mission, start_date, end_date) VALUES (2, 'Pustynna zadyma', '2013-07-22', '2015-02-19');
 INSERT INTO mission_team (mission_id, team_id) VALUES (1, 1), (2, 2), (1, 2);
+INSERT INTO item (item, description) VALUES ('AK-47', 'Broń jest niezwykle trwała, niezawodna i odporna na zabrudzenia oraz zaniedbania eksploatacyjne. Jest też prosta w obsłudze i tania w produkcji, przez co idealnie nadaje się do masowej produkcji i wykorzystywania nawet przez słabo wyszkolone oddziały. Do wad zalicza się dość słabą ergonomię i niewielką celność na dystansach ponad 300 metrów. Wziąwszy jednak pod uwagę, że w 85% przypadków z broni tego typu strzela się na odległości poniżej 300 metrów, wada ta nie ma większego znaczenia. Nie licząc produkcji licencyjnej, z konstrukcji karabinka AK bezpośrednio lub pośrednio wywodzą się takie bronie jak fińskie karabiny rodziny Valmet M62 i Sako M95, izraelskie Galile i polskie Beryle.')
+, ('Noktowizor', 'Nagły błysk światła (np. światło latarki skierowane na obiektyw noktowizora) mógł trwale uszkodzić delikatne elementy układu wzmacniającego światło szczątkowe. Dzisiejsze noktowizory są małe, niezawodne, o niewielkim poborze prądu i bardzo skuteczne. Dzięki nim nowoczesna armia może prowadzić sprawne działania w warunkach nocnych.
+Cywilne zastosowanie noktowizorów to wyposażenie dla myśliwych, wspomaganie nocnego monitoringu w budynkach oraz realizacja filmów przyrodniczych w warunkach nocnych, bez płoszenia zwierząt sztucznym oświetleniem. Podobne zastosowanie posiada celownik noktowizyjny.');
+INSERT INTO item_soldier (item_id, soldier_id) VALUES (1, 1), (1, 2);

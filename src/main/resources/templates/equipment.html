@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang = "pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Wyposażenie </title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/user.css" />
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/js/sortable.js"></script>
+    <script src="/js/equipment.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}"> Strona główna </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/commander}"> Panel dowódcy </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/soldier}"> Panel żołnierza </a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" th:href="@{#}"> Wyposażenie </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/news}" th:text="${'Aktualności'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{#}" th:text="${'Zalogowany jako:' + ' ' + user.username + ' (' + user.email + ')'}" />
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}" th:text="${'Wyloguj'}" />
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class = "col-12 p-0">
+            <div class = "jumbotron min-vh-100 text-center d-flex flex-column justify-content-center">
+                <div class = "row">
+                    <div class="col-12 p-0">
+                        <p><a class="btn btn-secondary" style="color: white;" th:href="@{/items}" th:text="'Przeglądaj przedmioty'"></a></p>
+                        <p style="font-weight: bold; font-size: 130%; color: darkred;" th:text="'Możesz maksymalnie posiadać 7 przedmiotów!'"></p>
+                        <p style="font-weight: bold;" id="itemsAmount" th:text="'Posiadasz aktualnie ' + ${itemsAmount} + ' w ekwipunku.'"></p>
+                    </div>
+                </div>
+                <table class="table table-hover table-striped sortable" id="equipmentTable">
+                <thead class="thead-dark">
+                <tr>
+                    <th class="text-info font-italic font-weight-bold h4" th:text="'Nazwa'"></th>
+                    <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="i : ${items}">
+                    <tr th:id="${i.id}">
+                        <td th:text="${i.item}"></td>
+                        <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteItem(event,'+${i.id}+','+${soldier.id}+')'">Usuń</button></td>
+                    </tr>
+                </th:block>
+                </tbody>
+                </table>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"> Dodaj do ekwipunku </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalTitle">Dodawanie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addItem" th:object="${soldier}">
+                        <select th:field="*{items}" id="item" multiple="multiple" required class="form-control">
+                            <option th:each = "i : ${notSoldierItems}" th:value = "${i.id}" th:text = "${i.item}"></option>
+                        </select> <br />
+                        <input type="hidden" id="id" th:field="*{id}" />
+                        <input type="submit" class="btn btn-primary" value="Dodaj" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="fixed-bottom">
+    <div class="container text-center font-italic">
+        <p class="h3"> © 2019 Copyright: <a class="text-warning font-weight-bold" th:href="@{https://github.com/jsildatk}"> Fajna firma </a></p>
+    </div>
+</footer>
+</body>
+</html>

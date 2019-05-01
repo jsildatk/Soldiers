@@ -28,7 +28,7 @@ mysql -u root -p
 > FLUSH PRIVILEGES;
 > source /your/path/src/main/resources/script.sql;
 ```
-2) Run project
+2) Run project in terminal
 ```
 mvn spring-boot:run
 ```
@@ -58,11 +58,11 @@ Not logged user (soldier) can only proceed through registration process but only
 - check team
 - create and update or delete own news
 - manage missions
-- manage equipment (*)
-## Soldier has privileges to:
+- manage equipment
+## Soldier has privileges to: (*)
 - check and update personal data
 - check team
-- check missions (*)
-- manage equipment (*)
+- check missions
+- manage equipment
 ##
 (*) - not done yet
