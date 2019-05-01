@@ -24,7 +24,7 @@ Web application for managing a military system (soldiers, users, teams, missions
 mysql -u root -p 
 > CREATE DATABASE soldiers;
 > CREATE USER 'soldier_user'@'localhost' IDENTIFIED BY 'zaq1@WSX';
-> GRANT ALL PRIVILEGES ON soldiers*. TO 'solidier_user'@'localhost';
+> GRANT ALL PRIVILEGES ON soldiers.* TO 'solidier_user'@'localhost';
 > FLUSH PRIVILEGES;
 > source /your/path/src/main/resources/script.sql;
 ```
@@ -55,14 +55,14 @@ Not logged user (soldier) can only proceed through registration process but only
 - create and update or delete any news
 ## Commander has privileges to:
 - check and update personal data
-- check team (*)
+- check team
 - create and update or delete own news
-- manage missions (*)
+- manage missions
 - manage equipment (*)
-## Soldier has privileges to: (*)
+## Soldier has privileges to:
 - check and update personal data
 - check team
-- check missions
-- manage equipment
+- check missions (*)
+- manage equipment (*)
 ##
 (*) - not done yet

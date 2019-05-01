@@ -72,7 +72,7 @@ CREATE TABLE soldier (
     birth_date DATE NOT NULL,
     PRIMARY KEY (soldier_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id),
-    FOREIGN KEY (rank_id) REFERENCES rank (rank_id),
+    FOREIGN KEY (rank_id) REFERENCES `rank` (rank_id),
     FOREIGN KEY (address_id) REFERENCES address (address_id),
     FOREIGN KEY (team_id) REFERENCES team (team_id)
 ) DEFAULT CHARSET=UTF8;
@@ -122,7 +122,7 @@ END //
 DELIMITER ;
 
 INSERT INTO role (role) VALUES ('ADMIN'), ('COMMANDER'), ('SOLDIER');
-INSERT INTO rank (rank) VALUES ('Szeregowy'), ('Kapral'), ('Sierżant'), ('Chorąży'), ('Podporucznik'), ('Porucznik'), ('Kapitan'), ('Major'),
+INSERT INTO `rank` (`rank`) VALUES ('Szeregowy'), ('Kapral'), ('Sierżant'), ('Chorąży'), ('Podporucznik'), ('Porucznik'), ('Kapitan'), ('Major'),
 ('Podpułkownik'), ('Pułkownik'), ('Generał'), ('Marszałek');
 INSERT INTO address (street, city, postal_code) VALUES ('Wesoła 5', 'Sierakowice', '83-340'), ('Marynarska 23/102', 'Gdańsk', '80-126'), 
 ('Potocka 87', 'Warszawa', '21-340'), ('Marusarzówny 18', 'Gdańsk', '80-126'), ('Słoneczna 10/20', 'Kartuzy', '84-210'),

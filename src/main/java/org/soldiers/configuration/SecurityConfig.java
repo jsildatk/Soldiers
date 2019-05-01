@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/commander/**").hasAuthority("COMMANDER")
                 .antMatchers("/news/**", "/settings/**").hasAnyAuthority("ADMIN", "SOLDIER", "COMMANDER")
                 .antMatchers("/personalData/**").hasAnyAuthority("SOLDIER", "COMMANDER")
+                .antMatchers("/missions/**").hasAnyAuthority("ADMIN", "COMMANDER")
                 .and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/loginSuccess").failureUrl("/loginError")
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 .and().exceptionHandling().accessDeniedPage("/403")

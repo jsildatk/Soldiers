@@ -1,7 +1,7 @@
 searchMission = () => {
     let mission = $("#searchMission").val();
     $.ajax({
-        url: "/admin/missions/mission/" + mission,
+        url: "/missions/mission/" + mission,
         type: "GET",
         success: (data) => {
             if (data != "") {
@@ -60,13 +60,12 @@ $(() => {
             }
         });
     });
-
 });
 
 endMission = (e, missionId) => {
     e.preventDefault();
     $.ajax({
-        url: "/admin/missions/" + missionId,
+        url: "/missions/" + missionId,
         type: "PUT",
         success: (data) => {
             if (data.mission != null) {
@@ -88,25 +87,6 @@ endMission = (e, missionId) => {
             }
         }, error: () => {
             swal("Coś poszło nie tak", "Błąd", "error");
-        }
-    });
-}
-
-deleteMission = (e, missionId) => {
-    e.preventDefault();
-    $.ajax({
-        url: "/admin/missions/" + missionId,
-        type: "DELETE",
-        success: (data) => {
-            if (data != "Coś poszło nie tak") {
-                swal("Usunięto", data, "success");
-                $("tr[id=" + missionId + "]").remove();
-            } else {
-                swal("Wystąpił błąd", data, "error");
-            }
-        },
-        error: () => {
-            swal("Wystąpił błąd", "Błąd serwera", "error");
         }
     });
 }

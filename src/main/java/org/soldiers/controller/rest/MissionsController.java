@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/missions")
-public class AdminMissionsController {
+@RequestMapping("/missions")
+public class MissionsController {
     private MissionRepository missionRepository;
 
     @Autowired
-    public AdminMissionsController(MissionRepository missionRepository) {
+    public MissionsController(MissionRepository missionRepository) {
         this.missionRepository = missionRepository;
     }
 
