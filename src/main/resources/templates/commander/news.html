@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/js/news.js"></script>
+    <script src="/js/commander/news.js"></script>
     <script src="/js/sortable.js"></script>
 </head>
 <body>
@@ -62,9 +63,7 @@
                 <table class="table table-hover table-striped sortable" id="newsTable">
                     <thead class="thead-dark">
                     <tr>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'#'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Tytuł'"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'Autor'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="'Data dodania'"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
@@ -74,9 +73,7 @@
                     <tbody>
                     <th:block th:each="n : ${news}">
                         <tr th:id="${n.id}">
-                            <td th:text="${n.id}"></td>
                             <td th:text="${n.title}"></td>
-                            <td th:text="${n.user.username}"></td>
                             <td th:text="${n.addDate}"></td>
                             <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#contentModal" th:onclick="'getContent(event,'+${n.id}+')'">Treść</button></td>
                             <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateNews(event,'+${n.id}+')'">Edytuj</button></td>
