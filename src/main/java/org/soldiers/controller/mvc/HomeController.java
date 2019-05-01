@@ -14,7 +14,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -83,9 +82,8 @@ public class HomeController {
     }
 
     @GetMapping("/403")
-    @ResponseBody
     public String get403Page() {
-        return "403";
+        return "error/403";
     }
 
     @GetMapping("/loginError")

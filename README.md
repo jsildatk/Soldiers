@@ -36,8 +36,8 @@ mvn spring-boot:run
 ```
 localhost:8080/
 ```
-4) Default login and password for administrator account:\
-login: admin\
+4) Default logins and passwords:
+login: admin_test; commander_test; soldier_test;
 password: zaq1@WSX
 ## Database schema
 ![ERD](src/main/resources/erd.png?raw=true "ERD")
@@ -59,10 +59,8 @@ Not logged user (soldier) can only proceed through registration process but only
 - create and update or delete own news
 - manage missions
 - manage equipment
-## Soldier has privileges to: (*)
+## Soldier has privileges to:
 - check and update personal data
 - check team
 - check missions
 - manage equipment
-##
-(*) - not done yet
