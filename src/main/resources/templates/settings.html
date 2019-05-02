@@ -41,7 +41,7 @@
             <li class="nav-item active">
                 <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
             </li>
-            <li class="nav-item">
+            <li th:if="${user}" class="nav-item">
                 <a class="nav-link" th:href="@{#}" th:text="${'Zalogowany jako:' + ' ' + user.username + ' (' + user.email + ')'}" />
             </li>
             <li class="nav-item">
@@ -54,7 +54,7 @@
     <div class="row">
         <div class = "col-12 p-0">
             <div class = "jumbotron min-vh-100 text-center d-flex flex-column justify-content-center">
-                <form id="updateUserForm" role="form" th:object="${user}">
+                <form th:if="${user}" id="updateUserForm" role="form" th:object="${user}">
                     <div class="form-group">
                         <label for="username"> Nazwa użytkownika </label>
                         <input type="text" class="form-control" id="username" th:value="${user.username}" th:field="*{username}" required />
@@ -70,7 +70,7 @@
                     <input type="hidden" th:field="*{id}" id="id" />
                     <button type="submit" class="btn btn-primary"> Edytuj </button>
                 </form>
-                <div class="col-xs-3">
+                <div th:if="${user}" class="col-xs-3">
                     <button class="btn btn-info" th:onclick="'changePassword('+${user.id}+')'"> Zmień hasło </button>
                 </div>
             </div>

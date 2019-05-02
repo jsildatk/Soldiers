@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = "pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Strona administratora </title>
+    <title> Strona dowódcy </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/user.css" />
@@ -47,7 +47,7 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/settings}" th:text="${'Ustawienia'}" />
             </li>
-            <li class="nav-item">
+            <li th:if="${user}" class="nav-item">
                 <a class="nav-link" th:href="@{#}" th:text="${'Zalogowany jako:' + ' ' + user.username + ' (' + user.email + ')'}" />
             </li>
             <li class="nav-item">
