@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -42,7 +43,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public Object register(@Valid User user, BindingResult bindingResult) {
+    public Object register(@Valid User user, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
@@ -52,8 +53,10 @@ public class RegistrationController {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole(role);
             soldier.setUser(user);
+            httpServletResponse.setStatus(201);
             return soldierRepository.save(soldier);
         } catch (DataIntegrityViolationException e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }

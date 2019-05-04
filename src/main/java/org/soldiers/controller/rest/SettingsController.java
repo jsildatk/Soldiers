@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/settings")
 public class SettingsController {
@@ -40,7 +42,7 @@ public class SettingsController {
     }
 
     @PutMapping("/{id}")
-    public Object updateUser(@PathVariable Long id, User user) {
+    public Object updateUser(@PathVariable Long id, User user, HttpServletResponse httpServletResponse) {
         try {
             User u1 = userRepository.findById(id).get();
             User u2 = userRepository.findByUsername(user.getUsername());
@@ -55,6 +57,7 @@ public class SettingsController {
             u1.setUsername(user.getUsername());
             return userRepository.save(u1);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -22,7 +23,7 @@ public class PersonalDataController {
     }
 
     @PutMapping("/{id}")
-    public Object updatePersonalData(@PathVariable Long id, @Valid Soldier soldier, BindingResult bindingResult) {
+    public Object updatePersonalData(@PathVariable Long id, @Valid Soldier soldier, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
@@ -33,6 +34,7 @@ public class PersonalDataController {
             s1.setPersonalEvidenceNumber(soldier.getPersonalEvidenceNumber());
             s1.setBirthDate(soldier.getBirthDate());
             s1.setAddress(soldier.getAddress());
+            httpServletResponse.setStatus(409);
             return soldierRepository.save(s1);
         } catch (Exception e) {
             e.printStackTrace();

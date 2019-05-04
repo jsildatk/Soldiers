@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -29,13 +30,15 @@ public class MissionsController {
     }
 
     @PostMapping("")
-    public Object addMission(@ModelAttribute("missionForm") @Valid Mission mission, BindingResult bindingResult) {
+    public Object addMission(@ModelAttribute("missionForm") @Valid Mission mission, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
         try {
+            httpServletResponse.setStatus(201);
             return missionRepository.save(mission);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }

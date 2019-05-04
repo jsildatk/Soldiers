@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,20 +37,22 @@ public class AdminSoldiersController {
     }
 
     @PostMapping("")
-    public Object addSoldier(@Valid Soldier soldier, BindingResult bindingResult) {
+    public Object addSoldier(@Valid Soldier soldier, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
         try {
+            httpServletResponse.setStatus(201);
             return soldierRepository.save(soldier);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }
     }
 
     @PutMapping("/{id}")
-    public Object updateSoldier(@PathVariable Long id, @Valid Soldier soldier, BindingResult bindingResult) {
+    public Object updateSoldier(@PathVariable Long id, @Valid Soldier soldier, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
@@ -64,19 +67,21 @@ public class AdminSoldiersController {
             s1.setTeam(soldier.getTeam());
             return soldierRepository.save(s1);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteSoldierById(@PathVariable Long id) {
+    public String deleteSoldierById(@PathVariable Long id, HttpServletResponse httpServletResponse) {
         try {
             soldierRepository.deleteById(id);
             return "Usunięto żolnierza o id: " + id;
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
+            return "Coś poszło nie tak";
         }
-        return "Coś poszło nie tak";
     }
 }

@@ -7,6 +7,8 @@ import org.soldiers.repository.SoldierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/equipment")
 public class EquipmentController {
@@ -35,13 +37,14 @@ public class EquipmentController {
     }
 
     @DeleteMapping("/{itemId}/{soldierId}")
-    public Soldier deleteItemInSoldier(@PathVariable Long itemId, @PathVariable Long soldierId) {
+    public Soldier deleteItemInSoldier(@PathVariable Long itemId, @PathVariable Long soldierId, HttpServletResponse httpServletResponse) {
         try {
             Item i1 = itemRepository.findById(itemId).get();
             Soldier s1 = soldierRepository.findById(soldierId).get();
             s1.getItems().remove(i1);
             return soldierRepository.save(s1);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }

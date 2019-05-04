@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -38,22 +39,24 @@ public class NewsRestController {
     }
 
     @PostMapping("")
-    public Object addNews(@ModelAttribute("formNews") @Valid News news, BindingResult bindingResult, Principal principal) {
+    public Object addNews(@ModelAttribute("formNews") @Valid News news, BindingResult bindingResult, Principal principal, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
         try {
             news.setUser(userRepository.findByUsername(principal.getName()));
             news.setAddDate(getCurrentDate());
+            httpServletResponse.setStatus(201);
             return newsRepository.save(news);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }
     }
 
     @PutMapping("/{id}")
-    public Object updateNews(@PathVariable Long id, @ModelAttribute("formNews") @Valid News news, BindingResult bindingResult) {
+    public Object updateNews(@PathVariable Long id, @ModelAttribute("formNews") @Valid News news, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
@@ -64,17 +67,19 @@ public class NewsRestController {
             n1.setAddDate(getCurrentDate());
             return newsRepository.save(n1);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteNews(@PathVariable Long id) {
+    public String deleteNews(@PathVariable Long id, HttpServletResponse httpServletResponse) {
         try {
             newsRepository.deleteById(id);
             return "Usnięto ogłoszenie o id: " + id;
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return "Coś poszło nie tak";
         }

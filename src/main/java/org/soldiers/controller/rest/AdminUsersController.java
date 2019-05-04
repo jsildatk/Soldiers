@@ -5,6 +5,8 @@ import org.soldiers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/admin/users")
 public class AdminUsersController {
@@ -26,10 +28,16 @@ public class AdminUsersController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id,  User user) {
-        User u1 = userRepository.findById(id).get();
-        u1.setRole(user.getRole());
-        u1.setEnabled(user.getEnabled());
-        return userRepository.save(u1);
+    public User updateUser(@PathVariable Long id, User user, HttpServletResponse httpServletResponse) {
+        try {
+            User u1 = userRepository.findById(id).get();
+            u1.setRole(user.getRole());
+            u1.setEnabled(user.getEnabled());
+            return userRepository.save(u1);
+        } catch (Exception e) {
+            httpServletResponse.setStatus(409);
+            e.printStackTrace();
+            return null;
+        }
     }
 }

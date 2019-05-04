@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -48,26 +49,39 @@ public class AdminTeamsController {
     }
 
     @PostMapping("")
-    public Object addTeam(@ModelAttribute("formTeam") @Valid Team team, BindingResult bindingResult) {
+    public Object addTeam(@ModelAttribute("formTeam") @Valid Team team, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
-        return teamRepository.save(team);
+        try {
+            httpServletResponse.setStatus(201);
+            return teamRepository.save(team);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpServletResponse.setStatus(409);
+            return null;
+        }
     }
 
     @PutMapping("/{id}")
-    public Object updateTeam(@PathVariable Long id, @ModelAttribute("formTeam") @Valid Team team, BindingResult bindingResult) {
+    public Object updateTeam(@PathVariable Long id, @ModelAttribute("formTeam") @Valid Team team, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
-        Team t1 = teamRepository.findById(id).get();
-        t1.setTeam(team.getTeam());
-        return teamRepository.save(t1);
+        try {
+            Team t1 = teamRepository.findById(id).get();
+            t1.setTeam(team.getTeam());
+            return teamRepository.save(t1);
+        } catch (Exception e) {
+            httpServletResponse.setStatus(409);
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
     @DeleteMapping("/{id}")
-    public String deleteTeam(@PathVariable Long id) {
+    public String deleteTeam(@PathVariable Long id, HttpServletResponse httpServletResponse) {
         try {
             for (Soldier s : soldierRepository.findByTeam(teamRepository.findById(id).get())) {
                 s.setTeam(null);
@@ -75,6 +89,7 @@ public class AdminTeamsController {
             teamRepository.deleteById(id);
             return "Usunięto grupę o id: " + id;
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return "Coś poszło nie tak";
         }

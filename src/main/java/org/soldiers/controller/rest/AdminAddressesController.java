@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -34,20 +35,22 @@ public class AdminAddressesController {
     }
 
     @PostMapping("")
-    public Object addAddress(@Valid Address address, BindingResult bindingResult) {
+    public Object addAddress(@Valid Address address, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
         try {
+            httpServletResponse.setStatus(201);
             return addressRepository.save(address);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }
     }
 
     @PutMapping("/{id}")
-    public Object updateAddress(@PathVariable Long id, @Valid Address address, BindingResult bindingResult) {
+    public Object updateAddress(@PathVariable Long id, @Valid Address address, BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors();
         }
@@ -58,13 +61,14 @@ public class AdminAddressesController {
             a1.setPostalCode(address.getPostalCode());
             return addressRepository.save(a1);
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return null;
         }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteById(@PathVariable Long id) {
+    public String deleteById(@PathVariable Long id, HttpServletResponse httpServletResponse) {
         try {
             for (Soldier s : soldierRepository.findByAddress(addressRepository.findById(id).get())) {
                 s.setAddress(null);
@@ -72,6 +76,7 @@ public class AdminAddressesController {
             addressRepository.deleteById(id);
             return "Usunięto adres o id: " + id;
         } catch (Exception e) {
+            httpServletResponse.setStatus(409);
             e.printStackTrace();
             return "Coś poszło nie tak";
         }
