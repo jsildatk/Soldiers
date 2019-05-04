@@ -42,11 +42,11 @@ public class Soldier {
     private Set<Item> items = new HashSet<>();
 
     @Column(name = "first_name", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'imię' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
+    @Pattern(regexp = "\\p{Lu}\\p{L}*", message = "Pole 'imię' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'nazwisko' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
+    @Pattern(regexp = "\\p{Lu}\\p{L}*", message = "Pole 'nazwisko' musi zaczynać się z dużej litery oraz nie może zawierać cyfr")
     private String lastName;
 
     @Column(name = "personal_evidence_number", nullable = false, unique = true, length = 11)

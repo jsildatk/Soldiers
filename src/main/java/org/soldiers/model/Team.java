@@ -16,14 +16,14 @@ public class Team {
     private Long id;
 
     @Column(name = "team", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'grupa' musi się zaczynać z dużej litery oraz nie może zawierać cyfr")
+    @Pattern(regexp = "\\p{Lu}\\p{L}*", message = "Pole 'grupa' musi się zaczynać z dużej litery oraz nie może zawierać cyfr")
     private String team;
 
     @JsonBackReference
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY, mappedBy = "teams")
     Set<Mission> missions = new HashSet<>();
 
-    public Team(@Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'grupa' musi się zaczynać z dużej litery oraz nie może zawierać cyfr") String team, Set<Mission> missions) {
+    public Team(@Pattern(regexp = "\\p{Lu}\\p{L}*", message = "Pole 'grupa' musi się zaczynać z dużej litery oraz nie może zawierać cyfr") String team, Set<Mission> missions) {
         this.team = team;
         this.missions = missions;
     }

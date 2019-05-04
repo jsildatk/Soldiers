@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "news"})
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "news"})
 public class User {
     @Id
     @Column(name = "user_id")

@@ -30,7 +30,7 @@ public class Mission {
     private Soldier commander;
 
     @Column(name = "mission", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z0-9]*", message = "Pole 'misja' musi zaczynać się z dużej litery")
+    @Pattern(regexp = "[A-Z].*", message = "Pole 'misja' musi zaczynać się z dużej litery")
     private String mission;
 
     @Column(name = "start_date", nullable = false)
@@ -40,7 +40,7 @@ public class Mission {
     private Date endDate;
 
 
-    public Mission(Set<Team> teams, Soldier commander, @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'misja' musi zaczynać się z dużej litery") String mission, Date startDate, Date endDate) {
+    public Mission(Set<Team> teams, Soldier commander, @Pattern(regexp = "[A-Z].*", message = "Pole 'misja' musi zaczynać się z dużej litery") String mission, Date startDate, Date endDate) {
         this.teams = teams;
         this.commander = commander;
         this.mission = mission;

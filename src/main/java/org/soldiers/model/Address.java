@@ -12,11 +12,11 @@ public class Address {
     private Long id;
 
     @Column(name = "street", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]*\\s[0-9/]*", message = "Pole 'ulica' musi zaczynać się z dużej litery oraz mieć format ulica_numer lokalu")
+    @Pattern(regexp = "\\p{Lu}\\p{L}*\\s[0-9/]*", message = "Pole 'ulica' musi zaczynać się z dużej litery oraz mieć format ulica_numer lokalu")
     private String street;
 
     @Column(name = "city", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]*", message = "Pole 'miasto' musi zaczynać się z dużej litery oraz może zawierać tylko litery")
+    @Pattern(regexp = "\\p{Lu}\\p{L}*", message = "Pole 'miasto' musi zaczynać się z dużej litery oraz może zawierać tylko litery")
     private String city;
 
     @Column(name = "postal_code", nullable = false)
