@@ -21,9 +21,10 @@ public class AdminController {
     private TeamRepository teamRepository;
     private RoleRepository roleRepository;
     private MissionRepository missionRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    public AdminController(UserRepository userRepository, NewsRepository newsRepository, SoldierRepository soldierRepository, RankRepository rankRepository, AddressRepository addressRepository, TeamRepository teamRepository, RoleRepository roleRepository, MissionRepository missionRepository) {
+    public AdminController(UserRepository userRepository, NewsRepository newsRepository, SoldierRepository soldierRepository, RankRepository rankRepository, AddressRepository addressRepository, TeamRepository teamRepository, RoleRepository roleRepository, MissionRepository missionRepository, ItemRepository itemRepository) {
         this.userRepository = userRepository;
         this.newsRepository = newsRepository;
         this.soldierRepository = soldierRepository;
@@ -32,6 +33,7 @@ public class AdminController {
         this.teamRepository = teamRepository;
         this.roleRepository = roleRepository;
         this.missionRepository = missionRepository;
+        this.itemRepository = itemRepository;
     }
 
     @GetMapping("")
@@ -113,5 +115,15 @@ public class AdminController {
         model.addAttribute("news", news);
         model.addAttribute("formNews", new News());
         return "admin/news";
+    }
+
+    @GetMapping("/items")
+    public String adminItemsPage(Principal principal, Model model) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Item> items = itemRepository.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("items", items);
+        model.addAttribute("formItem", new Item());
+        return "admin/items";
     }
 }

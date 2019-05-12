@@ -24,6 +24,9 @@ public class Item {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "image", unique = true)
+    private String image;
+
     public Item() {}
 
     public Item(String item) {
@@ -60,5 +63,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

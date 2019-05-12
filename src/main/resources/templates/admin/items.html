@@ -8,8 +8,7 @@
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="/js/news.js"></script>
-    <script src="/js/admin/news.js"></script>
+    <script src="/js/admin/items.js"></script>
     <script src="/js/sortable.js"></script>
 </head>
 <body>
@@ -34,10 +33,10 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/teams}"> Grupy </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/news}"> Aktualności </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/admin/items}"> Przedmioty </a>
             </li>
         </ul>
@@ -69,33 +68,26 @@
     <div class="row">
         <div class = "col-12 p-0">
             <div class = "jumbotron min-vh-100 text-center d-flex flex-column">
-                <div class = "row">
-                    <div class="col-12 p-0">
-                        <input type="text" placeholder="Szukaj po tytule" id="searchNews"> <button type="button" class="btn btn-primary" onclick="searchNews()"> Szukaj </button>
-                    </div>
-                </div>
-                <table class="table table-hover table-striped sortable" id="newsTable">
+                <table class="table table-hover table-striped sortable" id="itemsTable">
                     <thead class="thead-dark">
                     <tr>
                         <th class="text-info font-italic font-weight-bold h4" th:text="'#'"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'Tytuł'"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'Autor'"></th>
-                        <th class="text-info font-italic font-weight-bold h4" th:text="'Data dodania'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="'Nazwa'"></th>
+                        <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                         <th class="text-info font-italic font-weight-bold h4" th:text="''"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <th:block th:each="n : ${news}">
-                        <tr th:id="${n.id}">
-                            <td th:text="${n.id}"></td>
-                            <td th:text="${n.title}"></td>
-                            <td th:text="${n.user.username}"></td>
-                            <td th:text="${n.addDate}"></td>
-                            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#contentModal" th:onclick="'getContent(event,'+${n.id}+')'">Treść</button></td>
-                            <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateNews(event,'+${n.id}+')'">Edytuj</button></td>
-                            <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteNews(event,'+${n.id}+')'">Usuń</button></td>
+                    <th:block th:each="i : ${items}">
+                        <tr th:id="${i.id}">
+                            <td th:text="${i.id}"></td>
+                            <td th:text="${i.item}"></td>
+                            <td><button type="button" data-toggle="modal" data-target="#descriptionModal" class="btn btn-secondary" th:onclick="'getDescription(event,'+${i.id}+')'">Opis</button></td>
+                            <td><button type="button" data-toggle="modal" data-target="#imageModal" class="btn btn-info" th:onclick="'getImage(event,'+${i.id}+')'">Zdjęcie</button></td>
+                            <td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" th:onclick="'updateItem(event,'+${i.id}+')'">Edytuj</button></td>
+                            <td><button type="button" class="btn btn-danger delete" th:onclick="'deleteItem(event,'+${i.id}+')'">Usuń</button></td>
                         </tr>
                     </th:block>
                     </tbody>
@@ -104,17 +96,33 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="contentModalTitle">Treść ogłoszenia</h5>
+                    <h5 class="modal-title" id="descriptionModalTitle">Opis</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalTitle">Zdjęcie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <img class="modal-body" style="margin: 0 auto; max-width: 100%; height: auto;"/>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
                 </div>
@@ -131,9 +139,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/news/rest}" method="post" th:object="${formNews}" id="addNewsForm">
-                        <input type="text" th:field="*{title}" th:placeholder="'Nazwa'" required /> <br />
-                        <textarea rows="5" th:field="*{content}" th:placeholder="'Treść'" required /> <br />
+                    <form th:action="@{/admin/items}" method="post" enctype="multipart/form-data" th:object="${formItem}" id="addItemForm">
+                        <input type="text" th:field="*{item}" th:placeholder="'Nazwa'" required /> <br />
+                        <textarea rows="5" th:field="*{description}" th:placeholder="'Opis'" required /> <br />
+                        <input type="file" th:field="*{image}" th:placeholder="'Zdjęcie'" required /> <br />
                         <input type="submit" class="btn btn-primary" value="Dodaj" />
                     </form>
                 </div>
@@ -153,10 +162,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form th:object="${formNews}" id="updateNewsForm">
-                        <input type="text" th:field="*{title}" th:placeholder="'Nazwa'" id="title" required />
-                        <textarea rows="5" th:field="*{content}" th:placeholder="'Treść'" id="content" required /> <br />
-                        <input type="hidden" th:field="*{id}" />
+                    <form th:object="${formItem}" id="updateItemForm">
+                        <input type="text" th:field="*{item}" id="item" th:placeholder="'Nazwa'" required /> <br />
+                        <textarea rows="5" th:field="*{description}" id="description" th:placeholder="'Opis'" required /> <br />
+                        <input type="file" th:field="*{image}" th:placeholder="'Zdjęcie'" required /> <br />
+                        <input type="text" id="path" disabled /> <br />
+                        <input type="hidden" id="id" />
                         <input type="submit" class="btn btn-primary" value="Edytuj" />
                     </form>
                 </div>
