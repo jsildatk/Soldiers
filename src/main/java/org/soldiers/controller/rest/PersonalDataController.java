@@ -34,7 +34,7 @@ public class PersonalDataController {
             s1.setPersonalEvidenceNumber(soldier.getPersonalEvidenceNumber());
             s1.setBirthDate(soldier.getBirthDate());
             s1.setAddress(soldier.getAddress());
-            httpServletResponse.setStatus(409);
+            httpServletResponse.setStatus(200);
             return soldierRepository.save(s1);
         } catch (Exception e) {
             e.printStackTrace();

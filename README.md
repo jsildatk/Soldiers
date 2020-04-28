@@ -18,6 +18,8 @@ Web application for managing a military system (soldiers, users, teams, missions
 - Bootstrap
 - SweetAlert - https://sweetalert.js.org/
 - Sorttable - https://www.kryogenix.org/code/browser/sorttable/
+- Selenide - https://selenide.org/
+- Cucumber
 ## How to run
 1) Set up MySQL
 ```

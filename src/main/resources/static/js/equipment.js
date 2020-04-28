@@ -24,7 +24,7 @@ $(() => {
                             + '</tr>');
                     }
                     $("#itemsAmount").text("Posiadasz aktualnie " + data.items.length + calculateItems(data.items.length) + " w ekwipunku.");
-                    swal("Wszytko przebiegło pomyślnie", "Dodano przedmiot(y)", "success");
+                    swal("Wszystko przebiegło pomyślnie", "Dodano przedmiot(y)", "success");
                 } else {
                     swal("Problem", data, "info");
                 }

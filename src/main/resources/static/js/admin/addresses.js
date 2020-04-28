@@ -30,7 +30,7 @@ $(() => {
                     $("#addressesTable").append('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.street + '</td><td>' + data.city + '</td>' +
                         '<td>' + data.postalCode + '<td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" onclick="updateAddress(event, ' + data.id + ')">Edytuj</button></td>' +
                         '<td><button type="button" class="btn btn-danger update" onclick="deleteAddress(event, ' + data.id + ')">Usuń</button></td></tr>');
-                    swal("Wszytko przebiegło pomyślnie", "Dodano adres", "success");
+                    swal("Wszystko przebiegło pomyślnie", "Dodano adres", "success");
                 } else {
                     let validation = "";
                     for (let i = 0; i < data.length; i++) {
@@ -60,7 +60,7 @@ $(() => {
                     $("#addressesTable #" + data.id).replaceWith('<tr id="' + data.id + '"><td>'+ data.id +'</td><td>' + data.street + '</td><td>' + data.city + '</td>' +
                         '<td>' + data.postalCode + '<td><button type="button" data-toggle="modal" data-target="#updateModal" class="btn btn-warning update" onclick="updateAddress(event, ' + data.id + ')">Edytuj</button></td>' +
                         '<td><button type="button" class="btn btn-danger update" onclick="deleteAddress(event, ' + data.id + ')">Usuń</button></td></tr>');
-                    swal("Wszytko przebiegło pomyślnie", "Zedytowano adres", "success");
+                    swal("Wszystko przebiegło pomyślnie", "Zedytowano adres", "success");
                 } else {
                     let validation = "";
                     for (let i = 0; i < data.length; i++) {
